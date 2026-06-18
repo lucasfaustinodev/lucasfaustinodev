@@ -1,6 +1,9 @@
 document.documentElement.classList.add("js-enabled");
 
 const isTouchDevice = window.matchMedia("(hover: none), (pointer: coarse)").matches;
+const isIOS =
+  /iP(ad|hone|od)/.test(navigator.userAgent) ||
+  (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const glow = document.querySelector(".cursor-glow");
 const tiltCards = document.querySelectorAll(".tilt-card");
@@ -31,6 +34,11 @@ function initSmoothScroll() {
 
 function initRevealAnimations() {
   if (!revealItems.length) return;
+
+  if (isIOS) {
+    initScrollRevealFallback(revealItems);
+    return;
+  }
 
   if (prefersReducedMotion || typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") {
     revealItems.forEach((item) => item.classList.add("is-visible"));
@@ -63,6 +71,43 @@ function initRevealAnimations() {
         }
       }
     );
+  });
+}
+
+function initScrollRevealFallback(items) {
+  if (prefersReducedMotion) {
+    items.forEach((item) => item.classList.add("is-visible"));
+    return;
+  }
+
+  let ticking = false;
+
+  const update = () => {
+    const viewHeight = window.innerHeight || document.documentElement.clientHeight;
+
+    items.forEach((item) => {
+      const rect = item.getBoundingClientRect();
+      const triggerPoint = rect.top + Math.min(rect.height * 0.35, 180);
+      const visible = triggerPoint < viewHeight * 0.88 && rect.bottom > viewHeight * 0.08;
+      item.classList.toggle("is-visible", visible);
+    });
+
+    ticking = false;
+  };
+
+  const requestUpdate = () => {
+    if (ticking) return;
+    ticking = true;
+    window.requestAnimationFrame(update);
+  };
+
+  window.requestAnimationFrame(requestUpdate);
+  window.addEventListener("scroll", requestUpdate, { passive: true });
+  window.addEventListener("resize", requestUpdate);
+  window.addEventListener("orientationchange", requestUpdate);
+  window.addEventListener("load", () => {
+    requestUpdate();
+    window.setTimeout(requestUpdate, 180);
   });
 }
 
