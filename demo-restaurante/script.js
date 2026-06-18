@@ -1,48 +1,81 @@
 document.documentElement.classList.add("js-enabled");
 
+const isTouchDevice = window.matchMedia("(hover: none), (pointer: coarse)").matches;
+const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const revealItems = document.querySelectorAll(
   ".hero-panel, .snap-strip article, .section-heading, .combo-card, .menu-header, .tabs, .product-card, .order-heading, .order-layout, .footer"
 );
-let revealTicking = false;
 
-const updateRevealItems = () => {
-  const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
-  const revealStart = viewportHeight * 0.88;
-  const resetAfterTop = viewportHeight * -0.16;
-  const resetBeforeBottom = viewportHeight * 1.04;
+function initSmoothScroll() {
+  if (isTouchDevice || prefersReducedMotion || typeof Lenis === "undefined") return;
 
-  revealItems.forEach((item) => {
-    const rect = item.getBoundingClientRect();
-    const shouldShow = rect.top < revealStart && rect.bottom > 0;
-    const shouldReset = rect.bottom < resetAfterTop || rect.top > resetBeforeBottom;
+  const lenis = new Lenis({
+    duration: 1,
+    smoothWheel: true,
+    lerp: 0.08
+  });
 
-    if (shouldShow) {
-      item.classList.add("is-visible");
-    } else if (shouldReset) {
-      item.classList.remove("is-visible");
+  lenis.on("scroll", () => {
+    if (window.ScrollTrigger) {
+      ScrollTrigger.update();
     }
   });
 
-  revealTicking = false;
-};
+  function raf(time) {
+    lenis.raf(time);
+    window.requestAnimationFrame(raf);
+  }
 
-const requestRevealUpdate = () => {
-  if (revealTicking) return;
-  revealTicking = true;
-  window.requestAnimationFrame(updateRevealItems);
-};
+  window.requestAnimationFrame(raf);
+}
 
-revealItems.forEach((item, index) => {
-  item.classList.add("reveal");
-  item.style.setProperty("--delay", `${Math.min(index * 10, 80)}ms`);
+function initRevealAnimations() {
+  if (!revealItems.length) return;
+
+  revealItems.forEach((item) => item.classList.add("reveal"));
+
+  if (prefersReducedMotion || typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") {
+    revealItems.forEach((item) => item.classList.add("is-visible"));
+    return;
+  }
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  revealItems.forEach((item, index) => {
+    const delay = isTouchDevice ? 0 : Math.min(index * 0.025, 0.12);
+
+    gsap.fromTo(
+      item,
+      {
+        autoAlpha: 0,
+        y: isTouchDevice ? 14 : 22
+      },
+      {
+        autoAlpha: 1,
+        y: 0,
+        duration: isTouchDevice ? 0.58 : 0.72,
+        delay,
+        ease: "power3.out",
+        overwrite: "auto",
+        scrollTrigger: {
+          trigger: item,
+          start: "top 88%",
+          end: "bottom 8%",
+          toggleActions: "play reverse play reverse"
+        }
+      }
+    );
+  });
+}
+
+initSmoothScroll();
+initRevealAnimations();
+
+window.addEventListener("load", () => {
+  if (window.ScrollTrigger) {
+    ScrollTrigger.refresh();
+  }
 });
-
-window.addEventListener("scroll", requestRevealUpdate, { passive: true });
-window.addEventListener("resize", requestRevealUpdate);
-window.addEventListener("load", requestRevealUpdate);
-window.addEventListener("pageshow", requestRevealUpdate);
-window.visualViewport?.addEventListener("resize", requestRevealUpdate);
-requestRevealUpdate();
 
 const tabs = document.querySelectorAll(".tab");
 const products = document.querySelectorAll(".product-card");
