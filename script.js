@@ -6,13 +6,20 @@ let revealTicking = false;
 
 const updateRevealItems = () => {
   const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
-  const revealStart = viewportHeight * 0.84;
-  const revealEnd = viewportHeight * 0.08;
+  const revealStart = viewportHeight * 0.88;
+  const resetAfterTop = viewportHeight * -0.16;
+  const resetBeforeBottom = viewportHeight * 1.04;
 
   revealItems.forEach((item) => {
     const rect = item.getBoundingClientRect();
-    const isInsideRevealBand = rect.top < revealStart && rect.bottom > revealEnd;
-    item.classList.toggle("is-visible", isInsideRevealBand);
+    const shouldShow = rect.top < revealStart && rect.bottom > 0;
+    const shouldReset = rect.bottom < resetAfterTop || rect.top > resetBeforeBottom;
+
+    if (shouldShow) {
+      item.classList.add("is-visible");
+    } else if (shouldReset) {
+      item.classList.remove("is-visible");
+    }
   });
 
   revealTicking = false;
