@@ -31,6 +31,9 @@ revealItems.forEach((item, index) => {
 
 window.addEventListener("scroll", requestRevealUpdate, { passive: true });
 window.addEventListener("resize", requestRevealUpdate);
+window.addEventListener("load", requestRevealUpdate);
+window.addEventListener("pageshow", requestRevealUpdate);
+window.visualViewport?.addEventListener("resize", requestRevealUpdate);
 requestRevealUpdate();
 
 if (!isTouchDevice) {
