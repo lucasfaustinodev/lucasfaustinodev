@@ -29,13 +29,14 @@ const revealObserver = new IntersectionObserver(
     });
   },
   {
-    rootMargin: "0px 0px -4% 0px",
-    threshold: 0.1
+    rootMargin: "0px 0px 12% 0px",
+    threshold: 0.04
   }
 );
 
 revealItems.forEach((item, index) => {
-  const itemDelay = item.dataset.revealDelay || Math.min(index * 35, 180);
+  const isTouchDevice = window.matchMedia("(hover: none), (pointer: coarse)").matches;
+  const itemDelay = item.dataset.revealDelay || (isTouchDevice ? Math.min(index * 16, 80) : Math.min(index * 35, 180));
   item.style.transitionDelay = `${itemDelay}ms`;
   item.style.animationDelay = `${itemDelay}ms`;
   revealObserver.observe(item);

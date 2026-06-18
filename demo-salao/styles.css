@@ -1037,14 +1037,14 @@ h3 {
   }
 
   .js-enabled .reveal {
-    -webkit-transform: translate3d(0, 18px, 0);
-    transform: translate3d(0, 18px, 0);
+    -webkit-transform: translate3d(0, 14px, 0);
+    transform: translate3d(0, 14px, 0);
     -webkit-transition:
-      opacity 760ms cubic-bezier(0.22, 1, 0.36, 1),
-      -webkit-transform 760ms cubic-bezier(0.22, 1, 0.36, 1);
+      opacity 660ms cubic-bezier(0.22, 1, 0.36, 1),
+      -webkit-transform 660ms cubic-bezier(0.22, 1, 0.36, 1);
     transition:
-      opacity 760ms cubic-bezier(0.22, 1, 0.36, 1),
-      transform 760ms cubic-bezier(0.22, 1, 0.36, 1);
+      opacity 660ms cubic-bezier(0.22, 1, 0.36, 1),
+      transform 660ms cubic-bezier(0.22, 1, 0.36, 1);
     will-change: opacity, transform;
   }
 
@@ -1054,13 +1054,13 @@ h3 {
   }
 
   .js-enabled .hero-copy.reveal {
-    -webkit-transform: translate3d(0, 20px, 0);
-    transform: translate3d(0, 20px, 0);
+    -webkit-transform: translate3d(0, 16px, 0);
+    transform: translate3d(0, 16px, 0);
   }
 
   .js-enabled .hero-visual.reveal {
-    -webkit-transform: translate3d(0, 22px, 0) scale(0.995);
-    transform: translate3d(0, 22px, 0) scale(0.995);
+    -webkit-transform: translate3d(0, 16px, 0) scale(0.998);
+    transform: translate3d(0, 16px, 0) scale(0.998);
   }
 
   .js-enabled .hero-visual.reveal.is-visible {
