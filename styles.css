@@ -583,7 +583,6 @@ h3 {
     transform 680ms cubic-bezier(0.22, 1, 0.36, 1);
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
-  will-change: opacity, transform;
 }
 
 .js-enabled .reveal.is-visible {
