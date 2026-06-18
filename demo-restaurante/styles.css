@@ -1097,6 +1097,7 @@ body.order-view .order-zone {
   transition-delay: var(--delay, 0ms);
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
+  will-change: opacity, transform;
 }
 
 .js-enabled .reveal.is-visible {
@@ -1383,7 +1384,14 @@ body.order-view .order-zone {
   *::before,
   *::after {
     scroll-behavior: auto !important;
-    transition-duration: 1ms !important;
-    animation-duration: 1ms !important;
+  }
+
+  .js-enabled .reveal {
+    -webkit-transition:
+      opacity 620ms ease,
+      -webkit-transform 620ms ease !important;
+    transition:
+      opacity 620ms ease,
+      transform 620ms ease !important;
   }
 }
