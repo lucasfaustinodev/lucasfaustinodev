@@ -1,3 +1,42 @@
+document.documentElement.classList.add("js-enabled");
+
+const revealItems = document.querySelectorAll(
+  ".hero-panel, .snap-strip article, .section-heading, .combo-card, .menu-header, .tabs, .product-card, .order-heading, .order-layout, .footer"
+);
+let revealTicking = false;
+
+const updateRevealItems = () => {
+  const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+  const revealStart = viewportHeight * 0.86;
+  const revealEnd = viewportHeight * 0.06;
+
+  revealItems.forEach((item) => {
+    const rect = item.getBoundingClientRect();
+    const isInsideRevealBand = rect.top < revealStart && rect.bottom > revealEnd;
+    item.classList.toggle("is-visible", isInsideRevealBand);
+  });
+
+  revealTicking = false;
+};
+
+const requestRevealUpdate = () => {
+  if (revealTicking) return;
+  revealTicking = true;
+  window.requestAnimationFrame(updateRevealItems);
+};
+
+revealItems.forEach((item, index) => {
+  item.classList.add("reveal");
+  item.style.setProperty("--delay", `${Math.min(index * 18, 140)}ms`);
+});
+
+window.addEventListener("scroll", requestRevealUpdate, { passive: true });
+window.addEventListener("resize", requestRevealUpdate);
+window.addEventListener("load", requestRevealUpdate);
+window.addEventListener("pageshow", requestRevealUpdate);
+window.visualViewport?.addEventListener("resize", requestRevealUpdate);
+requestRevealUpdate();
+
 const tabs = document.querySelectorAll(".tab");
 const products = document.querySelectorAll(".product-card");
 const addButtons = document.querySelectorAll(".add-button");
@@ -84,10 +123,16 @@ tabs.forEach((tab) => {
       product.classList.toggle("is-hidden", !visible);
 
       if (visible) {
-        product.classList.remove("product-enter");
-        window.requestAnimationFrame(() => {
-          product.classList.add("product-enter");
-        });
+        product.animate(
+          [
+            { opacity: 0, transform: "translateY(14px) scale(.98)" },
+            { opacity: 1, transform: "translateY(0) scale(1)" },
+          ],
+          {
+            duration: 280,
+            easing: "cubic-bezier(.16, 1, .3, 1)",
+          }
+        );
       }
     });
   });
@@ -101,9 +146,8 @@ addButtons.forEach((button) => {
 
     addToCart(name, price);
     cartLink.classList.remove("bump");
-    window.requestAnimationFrame(() => {
-      cartLink.classList.add("bump");
-    });
+    void cartLink.offsetWidth;
+    cartLink.classList.add("bump");
     button.classList.add("added");
     button.textContent = "Adicionado";
     window.setTimeout(() => {
