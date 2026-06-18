@@ -84,16 +84,10 @@ tabs.forEach((tab) => {
       product.classList.toggle("is-hidden", !visible);
 
       if (visible) {
-        product.animate(
-          [
-            { opacity: 0, transform: "translateY(14px) scale(.98)" },
-            { opacity: 1, transform: "translateY(0) scale(1)" },
-          ],
-          {
-            duration: 280,
-            easing: "cubic-bezier(.16, 1, .3, 1)",
-          }
-        );
+        product.classList.remove("product-enter");
+        window.requestAnimationFrame(() => {
+          product.classList.add("product-enter");
+        });
       }
     });
   });
@@ -107,8 +101,9 @@ addButtons.forEach((button) => {
 
     addToCart(name, price);
     cartLink.classList.remove("bump");
-    void cartLink.offsetWidth;
-    cartLink.classList.add("bump");
+    window.requestAnimationFrame(() => {
+      cartLink.classList.add("bump");
+    });
     button.classList.add("added");
     button.textContent = "Adicionado";
     window.setTimeout(() => {
