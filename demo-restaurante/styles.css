@@ -1171,7 +1171,7 @@ body.order-view .order-zone {
 
   .hero-food {
     padding: 0 28px 34px;
-    animation: none;
+    animation: heroFoodFloat 7s ease-in-out infinite;
   }
 
   .hero-image-frame {
