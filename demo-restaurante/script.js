@@ -1,9 +1,6 @@
 document.documentElement.classList.add("js-enabled");
 
 const isTouchDevice = window.matchMedia("(hover: none), (pointer: coarse)").matches;
-const isIOS =
-  /iP(ad|hone|od)/.test(navigator.userAgent) ||
-  (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const revealItems = document.querySelectorAll(
   ".hero-panel, .snap-strip article, .section-heading, .combo-card, .menu-header, .tabs, .product-card, .order-heading, .order-layout, .footer"
@@ -37,31 +34,31 @@ function initRevealAnimations() {
 
   revealItems.forEach((item) => item.classList.add("reveal"));
 
-  if (isIOS) {
-    initScrollRevealFallback(revealItems);
+  if (prefersReducedMotion) {
+    revealItems.forEach((item) => item.classList.add("is-visible"));
     return;
   }
 
-  if (prefersReducedMotion || typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") {
-    revealItems.forEach((item) => item.classList.add("is-visible"));
+  if (isTouchDevice || typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") {
+    initMobileReveal(revealItems);
     return;
   }
 
   gsap.registerPlugin(ScrollTrigger);
 
   revealItems.forEach((item, index) => {
-    const delay = isTouchDevice ? 0 : Math.min(index * 0.025, 0.12);
+    const delay = Math.min(index * 0.025, 0.12);
 
     gsap.fromTo(
       item,
       {
         autoAlpha: 0,
-        y: isTouchDevice ? 14 : 22
+        y: 22
       },
       {
         autoAlpha: 1,
         y: 0,
-        duration: isTouchDevice ? 0.58 : 0.72,
+        duration: 0.72,
         delay,
         ease: "power3.out",
         overwrite: "auto",
@@ -76,12 +73,37 @@ function initRevealAnimations() {
   });
 }
 
-function initScrollRevealFallback(items) {
-  if (prefersReducedMotion) {
-    items.forEach((item) => item.classList.add("is-visible"));
+function initMobileReveal(items) {
+  if (!("IntersectionObserver" in window)) {
+    initManualReveal(items);
     return;
   }
 
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        entry.target.classList.toggle("is-visible", entry.isIntersecting);
+      });
+    },
+    {
+      root: null,
+      rootMargin: "0px 0px -12% 0px",
+      threshold: 0.12
+    }
+  );
+
+  const observeItems = () => {
+    items.forEach((item) => observer.observe(item));
+  };
+
+  if (document.readyState === "complete") {
+    window.requestAnimationFrame(observeItems);
+  } else {
+    window.addEventListener("load", () => window.requestAnimationFrame(observeItems), { once: true });
+  }
+}
+
+function initManualReveal(items) {
   let ticking = false;
 
   const update = () => {
@@ -107,10 +129,6 @@ function initScrollRevealFallback(items) {
   window.addEventListener("scroll", requestUpdate, { passive: true });
   window.addEventListener("resize", requestUpdate);
   window.addEventListener("orientationchange", requestUpdate);
-  window.addEventListener("load", () => {
-    requestUpdate();
-    window.setTimeout(requestUpdate, 180);
-  });
 }
 
 initSmoothScroll();

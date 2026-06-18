@@ -1097,7 +1097,6 @@ body.order-view .order-zone {
   transition-delay: var(--delay, 0ms);
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
-  will-change: opacity, transform;
 }
 
 .js-enabled .reveal.is-visible {
