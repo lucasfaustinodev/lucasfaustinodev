@@ -1086,14 +1086,14 @@ body.order-view .order-zone {
 
 .js-enabled .reveal {
   opacity: 0;
-  -webkit-transform: translate3d(0, 18px, 0);
-  transform: translate3d(0, 18px, 0);
+  -webkit-transform: translate3d(0, 14px, 0);
+  transform: translate3d(0, 14px, 0);
   -webkit-transition:
-    opacity 720ms cubic-bezier(0.22, 1, 0.36, 1),
-    -webkit-transform 720ms cubic-bezier(0.22, 1, 0.36, 1);
+    opacity 640ms cubic-bezier(0.22, 1, 0.36, 1),
+    -webkit-transform 640ms cubic-bezier(0.22, 1, 0.36, 1);
   transition:
-    opacity 720ms cubic-bezier(0.22, 1, 0.36, 1),
-    transform 720ms cubic-bezier(0.22, 1, 0.36, 1);
+    opacity 640ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 640ms cubic-bezier(0.22, 1, 0.36, 1);
   transition-delay: var(--delay, 0ms);
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
@@ -1165,10 +1165,25 @@ body.order-view .order-zone {
 
   .hero-panel {
     min-height: auto;
+    gap: 0;
+    overflow: hidden;
   }
 
   .hero-food {
     padding: 0 28px 34px;
+    animation: none;
+  }
+
+  .hero-image-frame {
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+  .hero-image-frame img {
+    width: 100%;
+    max-height: 430px;
+    object-fit: cover;
+    object-position: center;
   }
 
   .snap-strip,
@@ -1249,14 +1264,19 @@ body.order-view .order-zone {
 
   .hero-panel {
     border-radius: 28px;
+    background:
+      radial-gradient(circle at 74% 34%, rgba(216, 168, 79, 0.2), transparent 24%),
+      linear-gradient(145deg, #2a1511 0%, #8f1714 56%, #160d0a 100%);
   }
 
   .hero-copy {
-    padding: 28px;
+    gap: 16px;
+    padding: 30px 24px 20px;
   }
 
   h1 {
-    font-size: 3.55rem;
+    font-size: clamp(3rem, 15vw, 4.35rem);
+    line-height: 0.9;
   }
 
   h2 {
@@ -1272,13 +1292,15 @@ body.order-view .order-zone {
   }
 
   .hero-image-frame img {
+    display: block;
+    aspect-ratio: 1 / 0.84;
     border-width: 8px;
-    border-radius: 42px;
+    border-radius: 34px;
   }
 
   .price-bubble {
-    right: -8px;
-    bottom: -12px;
+    right: 10px;
+    bottom: 10px;
     top: auto;
     min-width: 106px;
     min-height: 58px;
