@@ -1,71 +1,107 @@
-const revealItems = document.querySelectorAll(".reveal");
+document.documentElement.classList.add("js-enabled");
+
+const isTouchDevice = window.matchMedia("(hover: none), (pointer: coarse)").matches;
+const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const glow = document.querySelector(".cursor-glow");
 const tiltCards = document.querySelectorAll(".tilt-card");
-const isTouchDevice = window.matchMedia("(hover: none), (pointer: coarse)").matches;
-let revealTicking = false;
+const revealItems = document.querySelectorAll(".reveal");
 
-const updateRevealItems = () => {
-  const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
-  const revealStart = viewportHeight * 0.88;
-  const resetAfterTop = viewportHeight * -0.16;
-  const resetBeforeBottom = viewportHeight * 1.04;
+function initSmoothScroll() {
+  if (isTouchDevice || prefersReducedMotion || typeof Lenis === "undefined") return;
 
-  revealItems.forEach((item) => {
-    const rect = item.getBoundingClientRect();
-    const shouldShow = rect.top < revealStart && rect.bottom > 0;
-    const shouldReset = rect.bottom < resetAfterTop || rect.top > resetBeforeBottom;
+  const lenis = new Lenis({
+    duration: 1.05,
+    smoothWheel: true,
+    lerp: 0.08
+  });
 
-    if (shouldShow) {
-      item.classList.add("is-visible");
-    } else if (shouldReset) {
-      item.classList.remove("is-visible");
+  lenis.on("scroll", () => {
+    if (window.ScrollTrigger) {
+      ScrollTrigger.update();
     }
   });
 
-  revealTicking = false;
-};
+  function raf(time) {
+    lenis.raf(time);
+    window.requestAnimationFrame(raf);
+  }
 
-const requestRevealUpdate = () => {
-  if (revealTicking) return;
-  revealTicking = true;
-  window.requestAnimationFrame(updateRevealItems);
-};
+  window.requestAnimationFrame(raf);
+}
 
-revealItems.forEach((item, index) => {
-  const delay = item.dataset.delay || (isTouchDevice ? Math.min(index * 8, 40) : Math.min(index * 45, 220));
-  item.style.setProperty("--delay", `${delay}ms`);
-});
+function initRevealAnimations() {
+  if (!revealItems.length) return;
 
-window.addEventListener("scroll", requestRevealUpdate, { passive: true });
-window.addEventListener("resize", requestRevealUpdate);
-window.addEventListener("load", requestRevealUpdate);
-window.addEventListener("pageshow", requestRevealUpdate);
-window.visualViewport?.addEventListener("resize", requestRevealUpdate);
-requestRevealUpdate();
+  if (prefersReducedMotion || typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") {
+    revealItems.forEach((item) => item.classList.add("is-visible"));
+    return;
+  }
 
-if (!isTouchDevice) {
+  gsap.registerPlugin(ScrollTrigger);
+
+  revealItems.forEach((item, index) => {
+    const delay = isTouchDevice ? 0 : Math.min(index * 0.035, 0.18);
+
+    gsap.fromTo(
+      item,
+      {
+        autoAlpha: 0,
+        y: isTouchDevice ? 14 : 26
+      },
+      {
+        autoAlpha: 1,
+        y: 0,
+        duration: isTouchDevice ? 0.62 : 0.78,
+        delay,
+        ease: "power3.out",
+        overwrite: "auto",
+        scrollTrigger: {
+          trigger: item,
+          start: "top 88%",
+          end: "bottom 8%",
+          toggleActions: "play reverse play reverse"
+        }
+      }
+    );
+  });
+}
+
+function initCursorGlow() {
+  if (isTouchDevice || !glow) return;
+
   window.addEventListener("pointermove", (event) => {
-    if (!glow) return;
-
     document.documentElement.style.setProperty("--cursor-x", `${event.clientX}px`);
     document.documentElement.style.setProperty("--cursor-y", `${event.clientY}px`);
   });
 }
 
-tiltCards.forEach((card) => {
+function initTiltCards() {
   if (isTouchDevice) return;
 
-  card.addEventListener("pointermove", (event) => {
-    const bounds = card.getBoundingClientRect();
-    const x = event.clientX - bounds.left;
-    const y = event.clientY - bounds.top;
-    const rotateX = ((y / bounds.height) - 0.5) * -5;
-    const rotateY = ((x / bounds.width) - 0.5) * 5;
+  tiltCards.forEach((card) => {
+    card.addEventListener("pointermove", (event) => {
+      const bounds = card.getBoundingClientRect();
+      const x = event.clientX - bounds.left;
+      const y = event.clientY - bounds.top;
+      const rotateX = ((y / bounds.height) - 0.5) * -5;
+      const rotateY = ((x / bounds.width) - 0.5) * 5;
 
-    card.style.transform = `perspective(900px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
-  });
+      card.style.transform = `perspective(900px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
+    });
 
-  card.addEventListener("pointerleave", () => {
-    card.style.transform = "";
+    card.addEventListener("pointerleave", () => {
+      card.style.transform = "";
+    });
   });
+}
+
+initSmoothScroll();
+initRevealAnimations();
+initCursorGlow();
+initTiltCards();
+
+window.addEventListener("load", () => {
+  if (window.ScrollTrigger) {
+    ScrollTrigger.refresh();
+  }
 });
