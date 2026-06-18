@@ -583,6 +583,7 @@ h3 {
     transform 680ms cubic-bezier(0.22, 1, 0.36, 1);
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
+  will-change: opacity, transform;
 }
 
 .js-enabled .reveal.is-visible {
@@ -747,7 +748,14 @@ h3 {
   *::before,
   *::after {
     scroll-behavior: auto !important;
-    transition-duration: 1ms !important;
-    animation-duration: 1ms !important;
+  }
+
+  .js-enabled .reveal {
+    -webkit-transition:
+      opacity 620ms ease,
+      -webkit-transform 620ms ease !important;
+    transition:
+      opacity 620ms ease,
+      transform 620ms ease !important;
   }
 }
