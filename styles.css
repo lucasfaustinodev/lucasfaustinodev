@@ -692,7 +692,11 @@ h3 {
 
   .hero {
     padding-top: 84px;
-    padding-bottom: 54px;
+    padding-bottom: 46px;
+  }
+
+  .hero-inner {
+    gap: 18px;
   }
 
   .site-header {
@@ -706,11 +710,20 @@ h3 {
   }
 
   h1 {
-    font-size: 4.2rem;
+    font-size: 3.75rem;
   }
 
   h2 {
-    font-size: 2.6rem;
+    font-size: 2.35rem;
+  }
+
+  .hero-kicker {
+    font-size: 1.34rem;
+  }
+
+  .hero-copy {
+    font-size: 1rem;
+    line-height: 1.62;
   }
 
   .hero-actions,
