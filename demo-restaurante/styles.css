@@ -872,6 +872,30 @@ body.order-view .order-zone {
   font-size: 1.35rem;
 }
 
+.clear-cart {
+  width: calc(100% - 36px);
+  min-height: 44px;
+  margin: 0 18px 18px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--red-dark);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 950;
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.clear-cart:hover,
+.clear-cart:focus-visible {
+  border-color: var(--red);
+  background: var(--cream);
+  color: var(--red);
+}
+
 .order-form {
   display: grid;
   gap: 16px;
@@ -962,6 +986,31 @@ body.order-view .order-zone {
   border: 0;
   cursor: pointer;
   font: inherit;
+}
+
+.order-status {
+  display: none;
+  padding: 12px 14px;
+  border-radius: 8px;
+  font-size: 0.92rem;
+  font-weight: 850;
+  line-height: 1.45;
+}
+
+.order-status.is-visible {
+  display: block;
+}
+
+.order-status.is-error {
+  border: 1px solid var(--line);
+  background: var(--cream);
+  color: var(--red-dark);
+}
+
+.order-status.is-success {
+  border: 1px solid var(--line);
+  background: var(--cream);
+  color: var(--green);
 }
 
 .form-note {

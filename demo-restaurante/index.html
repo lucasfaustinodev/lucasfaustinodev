@@ -328,28 +328,32 @@
               <span>Total</span>
               <strong data-cart-total>R$ 0</strong>
             </div>
+
+            <button class="clear-cart" type="button" data-clear-cart hidden>
+              Limpar carrinho
+            </button>
           </aside>
 
           <form class="order-form" data-order-form>
             <div class="field-grid">
               <label>
                 Nome
-                <input name="nome" type="text" placeholder="Seu nome" required />
+                <input name="nome" type="text" placeholder="Seu nome" autocomplete="name" maxlength="80" required />
               </label>
               <label>
                 Telefone
-                <input name="telefone" type="tel" placeholder="(00) 00000-0000" required />
+                <input name="telefone" type="tel" placeholder="(00) 00000-0000" autocomplete="tel" maxlength="20" required />
               </label>
             </div>
 
             <label>
               Endereço de entrega
-              <input name="endereco" type="text" placeholder="Rua, número, bairro" required />
+              <input name="endereco" type="text" placeholder="Rua, número, bairro" autocomplete="street-address" maxlength="120" required />
             </label>
 
             <label>
               Complemento ou referência
-              <input name="referencia" type="text" placeholder="Apto, bloco, ponto de referência" />
+              <input name="referencia" type="text" placeholder="Apto, bloco, ponto de referência" maxlength="90" />
             </label>
 
             <fieldset>
@@ -364,9 +368,10 @@
 
             <label>
               Observações
-              <textarea name="observacoes" rows="3" placeholder="Ex: tirar cebola, enviar talheres, troco para R$ 100"></textarea>
+              <textarea name="observacoes" rows="3" maxlength="180" placeholder="Ex: tirar cebola, enviar talheres, troco para R$ 100"></textarea>
             </label>
 
+            <p class="order-status" data-order-status aria-live="polite"></p>
             <button class="button primary send-order" type="submit">Finalizar Pedido</button>
             <p class="form-note">O pedido será enviado como mensagem. A equipe confirma valor final, entrega e horário.</p>
           </form>

@@ -64,12 +64,15 @@ const cartCount = document.querySelector("[data-cart-count]");
 const headerCount = document.querySelector("[data-header-count]");
 const cartTotal = document.querySelector("[data-cart-total]");
 const orderForm = document.querySelector("[data-order-form]");
+const clearCartButton = document.querySelector("[data-clear-cart]");
+const orderStatus = document.querySelector("[data-order-status]");
 const cartLink = document.querySelector(".cart-link");
 const smartOrderLinks = document.querySelectorAll("[data-smart-order]");
 const floatingCart = document.querySelector("[data-floating-cart]");
 const floatingCount = document.querySelector("[data-floating-count]");
 
 const whatsappNumber = "5500000000000";
+const cartStorageKey = "mordida-quente-cart";
 const cart = new Map();
 
 const formatCurrency = (value) =>
@@ -78,6 +81,55 @@ const formatCurrency = (value) =>
     currency: "BRL",
     maximumFractionDigits: 0,
   }).format(value);
+
+const escapeHTML = (value) =>
+  String(value).replace(/[&<>"']/g, (character) => {
+    const entities = {
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#039;",
+    };
+
+    return entities[character];
+  });
+
+const setOrderStatus = (message, type = "error") => {
+  orderStatus.textContent = message;
+  orderStatus.className = `order-status is-visible is-${type}`;
+};
+
+const clearOrderStatus = () => {
+  orderStatus.textContent = "";
+  orderStatus.className = "order-status";
+};
+
+const saveCart = () => {
+  try {
+    localStorage.setItem(cartStorageKey, JSON.stringify([...cart.values()]));
+  } catch {
+    // O carrinho continua funcionando mesmo se o navegador bloquear storage.
+  }
+};
+
+const loadCart = () => {
+  try {
+    const savedItems = JSON.parse(localStorage.getItem(cartStorageKey) || "[]");
+
+    savedItems.forEach((item) => {
+      if (!item.name || !Number.isFinite(item.price) || !Number.isFinite(item.quantity)) return;
+
+      cart.set(item.name, {
+        name: item.name,
+        price: item.price,
+        quantity: Math.max(1, Math.min(item.quantity, 99)),
+      });
+    });
+  } catch {
+    localStorage.removeItem(cartStorageKey);
+  }
+};
 
 const renderCart = () => {
   const items = [...cart.values()];
@@ -89,12 +141,14 @@ const renderCart = () => {
   floatingCount.textContent = totalItems;
   cartTotal.textContent = formatCurrency(total);
   floatingCart.classList.toggle("is-hidden", totalItems === 0);
+  clearCartButton.hidden = totalItems === 0;
   smartOrderLinks.forEach((link) => {
     link.setAttribute("href", totalItems > 0 ? "#pedido" : "#cardapio");
   });
 
   if (!items.length) {
-    cartItems.innerHTML = '<p class="empty-cart">Seu carrinho ainda está vazio.</p>';
+    cartItems.innerHTML =
+      '<p class="empty-cart">Seu carrinho ainda está vazio. Escolha um item do cardápio para começar.</p>';
     return;
   }
 
@@ -103,13 +157,13 @@ const renderCart = () => {
       (item) => `
         <article class="cart-item">
           <div>
-            <strong>${item.name}</strong>
+            <strong>${escapeHTML(item.name)}</strong>
             <small>${item.quantity}x ${formatCurrency(item.price)}</small>
           </div>
-          <div class="cart-controls" aria-label="Quantidade de ${item.name}">
-            <button type="button" data-cart-action="decrease" data-name="${item.name}">-</button>
+          <div class="cart-controls" aria-label="Quantidade de ${escapeHTML(item.name)}">
+            <button type="button" data-cart-action="decrease" data-name="${escapeHTML(item.name)}">-</button>
             <span>${item.quantity}</span>
-            <button type="button" data-cart-action="increase" data-name="${item.name}">+</button>
+            <button type="button" data-cart-action="increase" data-name="${escapeHTML(item.name)}">+</button>
           </div>
         </article>
       `
@@ -125,6 +179,8 @@ const addToCart = (name, price) => {
   const current = cart.get(name) || { name, price, quantity: 0 };
   current.quantity += 1;
   cart.set(name, current);
+  clearOrderStatus();
+  saveCart();
   renderCart();
 };
 
@@ -197,15 +253,30 @@ cartItems.addEventListener("click", (event) => {
     cart.set(item.name, item);
   }
 
+  saveCart();
+  renderCart();
+});
+
+clearCartButton.addEventListener("click", () => {
+  cart.clear();
+  saveCart();
+  clearOrderStatus();
   renderCart();
 });
 
 orderForm.addEventListener("submit", (event) => {
   event.preventDefault();
+  clearOrderStatus();
 
   const items = [...cart.values()];
   if (!items.length) {
-    alert("Adicione pelo menos um item ao carrinho antes de enviar o pedido.");
+    setOrderStatus("Adicione pelo menos um item ao carrinho antes de finalizar o pedido.");
+    cartItems.scrollIntoView({ behavior: "smooth", block: "center" });
+    return;
+  }
+
+  if (!orderForm.checkValidity()) {
+    orderForm.reportValidity();
     return;
   }
 
@@ -219,8 +290,19 @@ orderForm.addEventListener("submit", (event) => {
 
   const message = `Olá! Quero fazer um pedido no Mordida Quente.\n\nPedido:\n${orderLines}\n\nTotal estimado: ${formatCurrency(total)}\n\nNome: ${data.get("nome") || "Não informado"}\nTelefone: ${data.get("telefone") || "Não informado"}\nEndereço: ${data.get("endereco") || "Não informado"}\nComplemento/referência: ${data.get("referencia") || "Não informado"}\nPagamento: ${payment}\nObservações: ${data.get("observacoes") || "Nenhuma"}\n\nPode confirmar meu pedido?`;
 
-  window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, "_blank");
+  const whatsappWindow = window.open(
+    `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`,
+    "_blank"
+  );
+
+  if (!whatsappWindow) {
+    setOrderStatus("Não consegui abrir o WhatsApp automaticamente. Verifique o bloqueador de pop-ups do navegador.");
+    return;
+  }
+
+  setOrderStatus("Pedido organizado. O WhatsApp foi aberto para confirmar o envio.", "success");
 });
 
+loadCart();
 renderCart();
 syncView();
