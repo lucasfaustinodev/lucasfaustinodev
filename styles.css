@@ -56,8 +56,7 @@ a {
 a:focus-visible,
 .button:focus-visible,
 .nav-cta:focus-visible,
-.project-link:focus-visible,
-.offer-link:focus-visible {
+.project-link:focus-visible {
   outline: 3px solid rgba(216, 185, 122, 0.72);
   outline-offset: 4px;
 }
@@ -568,31 +567,6 @@ h3 {
   background: rgba(15, 17, 21, 0.52);
 }
 
-.offer-link {
-  display: inline-flex;
-  width: fit-content;
-  min-height: 44px;
-  align-items: center;
-  justify-content: center;
-  margin-top: 4px;
-  padding: 0 18px;
-  border: 1px solid var(--line-strong);
-  border-radius: 999px;
-  color: var(--text);
-  font-size: 0.94rem;
-  font-weight: 800;
-  transition:
-    border-color 0.25s ease,
-    color 0.25s ease,
-    transform 0.25s ease;
-}
-
-.offer-link:hover {
-  border-color: var(--gold-hover);
-  color: var(--gold-hover);
-  transform: translateY(-2px);
-}
-
 .offer-box li {
   position: relative;
   padding: 10px 0 10px 22px;
@@ -823,8 +797,7 @@ h3 {
   }
 
   .button,
-  .hero-proof span,
-  .offer-link {
+  .hero-proof span {
     width: 100%;
   }
 
