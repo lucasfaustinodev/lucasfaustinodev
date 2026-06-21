@@ -53,6 +53,24 @@ a {
   text-decoration: none;
 }
 
+a:focus-visible,
+.button:focus-visible,
+.nav-cta:focus-visible,
+.project-link:focus-visible {
+  outline: 3px solid rgba(216, 185, 122, 0.72);
+  outline-offset: 4px;
+}
+
+.brand:focus-visible,
+.project-card:focus-within {
+  border-radius: var(--radius);
+}
+
+.project-card:focus-within {
+  border-color: var(--line-strong);
+  box-shadow: var(--shadow);
+}
+
 p {
   color: var(--muted);
   line-height: 1.75;
