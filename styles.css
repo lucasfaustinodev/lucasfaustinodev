@@ -703,6 +703,13 @@ h3 {
     width: min(300px, calc(100% - 32px));
   }
 
+  .hero .eyebrow {
+    max-width: 300px;
+    font-size: 0.72rem;
+    letter-spacing: 0.13em;
+    line-height: 1.55;
+  }
+
   .brand-mark {
     width: 34px;
     height: 34px;
