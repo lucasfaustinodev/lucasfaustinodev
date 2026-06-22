@@ -1,400 +1,493 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mordida Quente Demo | Cardápio online</title>
+    <title>Mordida Quente Demo | Cardápio online premium</title>
     <meta
       name="description"
-      content="Mordida Quente Demo, restaurante com cardápio online, burgers artesanais, pratos quentes, bebidas e pedidos pelo WhatsApp."
+      content="Cardápio online da Mordida Quente Demo, com burgers artesanais, pratos, porções, bebidas e sobremesas."
     />
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <header class="site-header">
-      <a class="brand" href="#inicio" aria-label="Mordida Quente Demo">
-        <span class="brand-badge">MQ</span>
-        <span>
-          <strong>Mordida Quente</strong>
-          <small>Demo</small>
-        </span>
-      </a>
-
-      <nav class="nav-links" aria-label="Navegação principal">
-        <a href="#combos">Destaques</a>
-        <a href="#cardapio">Cardápio</a>
-        <a href="#pedido">Pedido</a>
-      </nav>
-
-      <div class="header-actions">
-        <a class="cart-link" href="#pedido" aria-label="Abrir carrinho">
-          <svg aria-hidden="true" viewBox="0 0 24 24">
-            <path d="M6.2 6h15l-1.7 8.2a2 2 0 0 1-2 1.6H9.3a2 2 0 0 1-2-1.7L5.8 4.8H3" />
-            <circle cx="9.5" cy="20" r="1.4" />
-            <circle cx="17.5" cy="20" r="1.4" />
-          </svg>
-          <span data-header-count>0</span>
+      <div class="header-shell">
+        <a class="brand" href="#inicio" aria-label="Mordida Quente Demo, início">
+          <span class="brand-mark">MQ</span>
+          <span class="brand-text">
+            <strong>Mordida Quente</strong>
+            <small>Demo</small>
+          </span>
         </a>
-        <a class="header-cta" href="#cardapio" data-smart-order>Faça seu pedido</a>
+
+        <nav class="desktop-nav" aria-label="Navegação principal">
+          <a href="#destaques">Destaques</a>
+          <a href="#cardapio">Cardápio</a>
+          <a href="#pedido" data-open-cart>Pedido</a>
+        </nav>
+
+        <div class="header-actions">
+          <a class="cart-button" href="#pedido" aria-label="Abrir carrinho" data-open-cart>
+            <span class="cart-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" focusable="false">
+                <path d="M6.5 8.5h11l-1 9h-9l-1-9Z"></path>
+                <path d="M9 8.5a3 3 0 0 1 6 0"></path>
+              </svg>
+            </span>
+            <span class="cart-count" data-cart-badge>0</span>
+          </a>
+          <a class="header-cta" href="#cardapio">Pedir agora</a>
+        </div>
       </div>
     </header>
 
     <main>
       <section class="hero" id="inicio">
-        <div class="hero-panel">
-          <div class="hero-copy">
-            <p class="eyebrow">Pedido rápido, sabor gigante</p>
-            <h1>Seu favorito chega quente, suculento e sem enrolação.</h1>
-            <p>
-              Burgers artesanais, pratos bem servidos, fritas crocantes e bebidas
-              geladas para matar a fome do jeito certo.
-            </p>
-            <div class="hero-actions">
-              <a class="button primary" href="#cardapio" data-smart-order>Faça seu pedido</a>
-              <a class="button ghost" href="#cardapio">Ver cardápio</a>
-            </div>
-          </div>
+        <div class="hero-card grain">
+          <div class="hero-glow hero-glow-primary" aria-hidden="true"></div>
+          <div class="hero-glow hero-glow-gold" aria-hidden="true"></div>
 
-          <div class="hero-food" aria-label="Burger artesanal em destaque">
-            <div class="hero-image-frame">
-              <img
-                src="https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=1200&q=90"
-                alt="Burger artesanal com queijo, salada e pão com gergelim"
-              />
-              <span class="price-bubble">
-                <small>A partir de</small>
-                R$ 38
-              </span>
+          <div class="hero-content">
+            <div class="hero-copy">
+              <span class="hero-tag">Artesanal na chapa</span>
+              <h1>Burger artesanal <span>feito na chapa.</span></h1>
+              <p>
+                Pães macios, carne suculenta e aquele sabor de hamburgueria
+                feita no capricho. Selado na chapa quente, do nosso jeito.
+              </p>
+
+              <div class="hero-rating" aria-label="Avaliação média">
+                <span class="stars" aria-hidden="true">★★★★★</span>
+                <strong>4,9</strong>
+                <span><strong>+2.400</strong> pedidos avaliados.</span>
+              </div>
+
+              <div class="hero-actions">
+                <a class="button button-primary" href="#cardapio">Ver cardápio</a>
+                <a class="button button-soft" href="#destaques">Ver favoritos</a>
+              </div>
+            </div>
+
+            <div class="hero-media">
+              <div class="hero-image">
+                <img
+                  src="assets/images/hero-burger.png"
+                  alt="Hambúrguer artesanal com carne suculenta, queijo derretido e pão brioche selado na chapa"
+                />
+              </div>
+              <div class="hero-price">
+                <span>Burgers a partir de</span>
+                <strong>R$ 24,90</strong>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section class="snap-strip" aria-label="Destaques rápidos">
-        <article>
-          <img
-            src="https://images.unsplash.com/photo-1576107232684-1279f390859f?auto=format&fit=crop&w=500&q=85"
-            alt="Porção de batata frita"
-          />
+      <section class="category-strip" aria-label="Categorias em destaque">
+        <a class="category-card" href="#cardapio">
+          <img src="assets/images/fritas.png" alt="Porção de fritas crocantes" />
           <span>Fritas crocantes</span>
-        </article>
-        <article class="active">
-          <img
-            src="https://images.unsplash.com/photo-1551782450-a2132b4ba21d?auto=format&fit=crop&w=500&q=85"
-            alt="Burger artesanal em close"
-          />
+        </a>
+        <a class="category-card is-highlight" href="#cardapio">
+          <img src="assets/images/bacon-burger.png" alt="Burger artesanal com queijo e bacon" />
           <span>Burger artesanal</span>
-        </article>
-        <article>
-          <img
-            src="https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=500&q=85"
-            alt="Bebida gelada"
-          />
+        </a>
+        <a class="category-card" href="#cardapio">
+          <img src="assets/images/bebidas.png" alt="Bebidas geladas servidas com gelo" />
           <span>Bebidas geladas</span>
-        </article>
+        </a>
       </section>
 
-      <section class="section hot-combos" id="combos">
-        <div class="section-heading">
-          <p class="eyebrow">Destaques da casa</p>
-          <h2>Três escolhas certeiras para pedir sem pensar duas vezes.</h2>
-        </div>
+      <section class="section favorites" id="destaques">
+        <header class="section-header">
+          <span>Destaques da casa</span>
+          <h2>Favoritos da casa.</h2>
+          <p>Burgers suculentos, pratos quentes e sobremesa para fechar bem.</p>
+        </header>
 
-        <div class="combo-grid">
-          <article class="combo-card" data-name="Burger da Casa" data-price="38">
-            <img
-              src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=88"
-              alt="Burger artesanal com queijo derretido"
-            />
-            <div>
-              <span class="highlight-number">Destaque 01</span>
-              <h3>Burger da Casa</h3>
-              <p>Blend artesanal, queijo derretido, salada fresca e molho especial.</p>
-              <div class="combo-summary">
-                <strong>R$ 38</strong>
-                <span>Suculento, tostado e feito para pedir sem pensar duas vezes.</span>
-              </div>
-              <button class="add-button combo-add" type="button">Adicionar</button>
-            </div>
-          </article>
-
-          <article class="combo-card" data-name="Massa Cremosa" data-price="42">
-            <img
-              src="https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=800&q=88"
-              alt="Massa cremosa"
-            />
-            <div>
-              <span class="highlight-number">Destaque 02</span>
-              <h3>Massa Cremosa</h3>
-              <p>Molho artesanal, parmesão, tomate assado e manjericão fresco.</p>
-              <div class="combo-summary">
-                <strong>R$ 42</strong>
-                <span>Quente, cremosa e com aquele sabor de prato bem servido.</span>
-              </div>
-              <button class="add-button combo-add" type="button">Adicionar</button>
-            </div>
-          </article>
-
-          <article class="combo-card" data-name="Costela Desfiada" data-price="46">
-            <img
-              src="https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?auto=format&fit=crop&w=800&q=88"
-              alt="Costela servida com acompanhamentos"
-            />
-            <div>
-              <span class="highlight-number">Destaque 03</span>
-              <h3>Costela Desfiada</h3>
-              <p>Costela macia, molho da casa, pão tostado e finalização na chapa.</p>
-              <div class="combo-summary">
-                <strong>R$ 46</strong>
-                <span>Intensa, macia e perfeita para quem gosta de sabor marcante.</span>
-              </div>
-              <button class="add-button combo-add" type="button">Adicionar</button>
-            </div>
-          </article>
-
-          <article class="combo-card" data-name="Brownie Quente" data-price="24">
-            <img
-              src="https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=800&q=88"
-              alt="Brownie quente com chocolate"
-            />
-            <div>
-              <span class="highlight-number">Destaque 04</span>
-              <h3>Brownie Quente</h3>
-              <p>Chocolate intenso, creme de baunilha e frutas vermelhas.</p>
-              <div class="combo-summary">
-                <strong>R$ 24</strong>
-                <span>Para fechar o pedido com uma sobremesa cremosa e marcante.</span>
-              </div>
-              <button class="add-button combo-add" type="button">Adicionar</button>
-            </div>
-          </article>
-        </div>
-      </section>
-
-      <section class="menu-zone" id="cardapio">
-        <div class="menu-header">
-          <div>
-            <p class="eyebrow">Cardápio online</p>
-            <h2>Monte seu pedido sem perder tempo.</h2>
+        <article class="featured-card" data-name="Burger da Casa" data-price="38">
+          <div class="featured-image">
+            <img src="assets/images/hero-burger.png" alt="Burger da Casa com queijo derretido" />
           </div>
-          <p>
-            Filtre por categoria, adicione seus favoritos ao carrinho e finalize
-            o pedido com endereço e pagamento antes de chamar no WhatsApp.
-          </p>
-        </div>
-
-        <div class="tabs" role="tablist" aria-label="Categorias do cardápio">
-          <button class="tab active" type="button" data-filter="todos">Todos</button>
-          <button class="tab" type="button" data-filter="burger">Burgers</button>
-          <button class="tab" type="button" data-filter="prato">Pratos</button>
-          <button class="tab" type="button" data-filter="porcao">Porções</button>
-          <button class="tab" type="button" data-filter="bebida">Bebidas</button>
-          <button class="tab" type="button" data-filter="doce">Doces</button>
-        </div>
-
-        <div class="product-grid">
-          <article class="product-card" data-category="burger" data-name="Burger da Casa" data-price="38">
-            <img
-              src="https://images.unsplash.com/photo-1551782450-a2132b4ba21d?auto=format&fit=crop&w=700&q=86"
-              alt="Burger clássico"
-            />
-            <div>
-              <span>Clássico</span>
-              <h3>Burger da Casa</h3>
-              <p>Blend artesanal, queijo, salada, molho especial e pão tostado.</p>
-              <strong>R$ 38</strong>
-              <button class="add-button" type="button">Adicionar</button>
+          <div class="featured-content grain">
+            <div class="feature-label">
+              <span>Mais pedido</span>
+              <i aria-hidden="true"></i>
             </div>
-          </article>
+            <h3>Burger da Casa</h3>
+            <p>Blend artesanal 180g, queijo, salada, molho especial e pão tostado.</p>
+            <div class="rating-line">
+              <span aria-hidden="true">★</span>
+              <strong>4,9</strong>
+              <small>clássico da casa.</small>
+            </div>
+            <div class="featured-order">
+              <strong>R$ 38</strong>
+              <button class="button button-primary add-to-cart" type="button">
+                Adicionar ao pedido
+              </button>
+            </div>
+          </div>
+        </article>
 
-          <article class="product-card" data-category="burger" data-name="Bacon Melt" data-price="44">
-            <img
-              src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?auto=format&fit=crop&w=700&q=86"
-              alt="Burger com bacon"
-            />
+        <div class="side-grid">
+          <article class="food-card" data-name="Bacon Melt" data-price="44">
+            <img src="assets/images/bacon-burger.png" alt="Bacon Melt com queijo derretido" />
             <div>
               <span>Defumado</span>
               <h3>Bacon Melt</h3>
               <p>Queijo derretido, bacon crocante, cebola caramelizada e barbecue.</p>
-              <strong>R$ 44</strong>
-              <button class="add-button" type="button">Adicionar</button>
+              <div class="card-order">
+                <strong>R$ 44</strong>
+                <button class="add-to-cart" type="button">Adicionar</button>
+              </div>
             </div>
           </article>
 
-          <article class="product-card" data-category="prato" data-name="Prato Quente" data-price="58">
-            <img
-              src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=700&q=86"
-              alt="Prato com carne e legumes"
-            />
+          <article class="food-card" data-name="Costela na Chapa" data-price="46">
+            <img src="assets/images/costela.png" alt="Costela na chapa com pão tostado" />
             <div>
-              <span>Na brasa</span>
-              <h3>Prato Quente</h3>
-              <p>Carne grelhada, legumes assados, arroz cremoso e molho da casa.</p>
-              <strong>R$ 58</strong>
-              <button class="add-button" type="button">Adicionar</button>
+              <span>Na chapa</span>
+              <h3>Costela na Chapa</h3>
+              <p>Costela macia, molho da casa e pão tostado na medida.</p>
+              <div class="card-order">
+                <strong>R$ 46</strong>
+                <button class="add-to-cart" type="button">Adicionar</button>
+              </div>
             </div>
           </article>
 
-          <article class="product-card" data-category="prato" data-name="Massa da Casa" data-price="42">
-            <img
-              src="https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=700&q=86"
-              alt="Massa cremosa"
-            />
-            <div>
-              <span>Cremoso</span>
-              <h3>Massa da Casa</h3>
-              <p>Parmesão, tomate assado, molho artesanal e manjericão.</p>
-              <strong>R$ 42</strong>
-              <button class="add-button" type="button">Adicionar</button>
-            </div>
-          </article>
-
-          <article class="product-card" data-category="porcao" data-name="Fritas Temperadas" data-price="26">
-            <img
-              src="https://images.unsplash.com/photo-1576107232684-1279f390859f?auto=format&fit=crop&w=700&q=86"
-              alt="Batata frita crocante"
-            />
-            <div>
-              <span>Crocante</span>
-              <h3>Fritas Temperadas</h3>
-              <p>Batata sequinha, páprica, sal da casa e maionese de alho.</p>
-              <strong>R$ 26</strong>
-              <button class="add-button" type="button">Adicionar</button>
-            </div>
-          </article>
-
-          <article class="product-card" data-category="bebida" data-name="Limonada Fresh" data-price="14">
-            <img
-              src="https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=700&q=86"
-              alt="Bebida gelada com limão"
-            />
-            <div>
-              <span>Gelada</span>
-              <h3>Limonada Fresh</h3>
-              <p>Limão, hortelã, bastante gelo e um toque cítrico.</p>
-              <strong>R$ 14</strong>
-              <button class="add-button" type="button">Adicionar</button>
-            </div>
-          </article>
-
-          <article class="product-card" data-category="doce" data-name="Brownie Quente" data-price="24">
-            <img
-              src="https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=700&q=86"
-              alt="Brownie com chocolate"
-            />
+          <article class="food-card" data-name="Brownie Quente" data-price="24">
+            <img src="assets/images/brownie.png" alt="Brownie quente com creme e frutas vermelhas" />
             <div>
               <span>Sobremesa</span>
               <h3>Brownie Quente</h3>
               <p>Chocolate intenso, creme de baunilha e frutas vermelhas.</p>
-              <strong>R$ 24</strong>
-              <button class="add-button" type="button">Adicionar</button>
-            </div>
-          </article>
-
-          <article class="product-card text-card" data-category="todos">
-            <div>
-              <span>Como pedir</span>
-              <h3>Escolheu? O carrinho organiza tudo.</h3>
-              <p>Adicione os itens, abra o carrinho, preencha entrega e pagamento, depois finalize pelo WhatsApp.</p>
-              <a href="#pedido">Ir para o carrinho</a>
+              <div class="card-order">
+                <strong>R$ 24</strong>
+                <button class="add-to-cart" type="button">Adicionar</button>
+              </div>
             </div>
           </article>
         </div>
       </section>
 
-      <section class="order-zone" id="pedido">
-        <div class="order-heading">
-          <p class="eyebrow">Finalize seu pedido</p>
-          <h2>Seu carrinho vira mensagem pronta no WhatsApp.</h2>
+      <section class="section menu-section" id="cardapio">
+        <div class="menu-heading">
+          <div>
+            <span>Cardápio online</span>
+            <h2>Escolha, revise no carrinho e confirme seu pedido.</h2>
+          </div>
           <p>
-            Adicione os itens, escolha a forma de pagamento, preencha o endereço
-            e envie tudo organizado para o atendimento.
+            Selecione seus favoritos, ajuste as quantidades e confira tudo antes
+            de finalizar.
           </p>
-          <a class="back-menu" href="#cardapio">Voltar ao cardápio</a>
         </div>
 
-        <div class="order-layout">
-          <aside class="cart-box">
-            <div class="cart-head">
-              <span>Carrinho</span>
-              <strong data-cart-count>0 itens</strong>
-            </div>
+        <div class="filters" role="tablist" aria-label="Categorias do cardápio">
+          <button class="filter active" type="button" data-filter="Todos">Todos</button>
+          <button class="filter" type="button" data-filter="Burgers">Burgers</button>
+          <button class="filter" type="button" data-filter="Pratos">Pratos</button>
+          <button class="filter" type="button" data-filter="Porções">Porções</button>
+          <button class="filter" type="button" data-filter="Bebidas">Bebidas</button>
+          <button class="filter" type="button" data-filter="Doces">Doces</button>
+        </div>
 
-            <div class="cart-items" data-cart-items>
-              <p class="empty-cart">Seu carrinho ainda está vazio.</p>
-            </div>
-
-            <div class="cart-total">
-              <span>Total</span>
-              <strong data-cart-total>R$ 0</strong>
-            </div>
-
-            <button class="clear-cart" type="button" data-clear-cart hidden>
-              Limpar carrinho
-            </button>
-          </aside>
-
-          <form class="order-form" data-order-form>
-            <div class="field-grid">
-              <label>
-                Nome
-                <input name="nome" type="text" placeholder="Seu nome" autocomplete="name" maxlength="80" required />
-              </label>
-              <label>
-                Telefone
-                <input name="telefone" type="tel" placeholder="(00) 00000-0000" autocomplete="tel" maxlength="20" required />
-              </label>
-            </div>
-
-            <label>
-              Endereço de entrega
-              <input name="endereco" type="text" placeholder="Rua, número, bairro" autocomplete="street-address" maxlength="120" required />
-            </label>
-
-            <label>
-              Complemento ou referência
-              <input name="referencia" type="text" placeholder="Apto, bloco, ponto de referência" maxlength="90" />
-            </label>
-
-            <fieldset>
-              <legend>Forma de pagamento</legend>
-              <div class="payment-options">
-                <label><input type="radio" name="pagamento" value="Pix" checked /> Pix</label>
-                <label><input type="radio" name="pagamento" value="Cartão de débito" /> Débito</label>
-                <label><input type="radio" name="pagamento" value="Cartão de crédito" /> Crédito</label>
-                <label><input type="radio" name="pagamento" value="Dinheiro" /> Dinheiro</label>
+        <div class="product-grid">
+          <article class="product-card" data-category="Burgers" data-name="Burger da Casa" data-price="38">
+            <img src="assets/images/hero-burger.png" alt="Burger da Casa" />
+            <div>
+              <span>Mais pedido</span>
+              <h3>Burger da Casa</h3>
+              <p>Blend artesanal 180g, queijo, salada, molho especial e pão tostado.</p>
+              <div class="product-order">
+                <strong>R$ 38</strong>
+                <button class="add-to-cart" type="button">Adicionar</button>
               </div>
-            </fieldset>
+            </div>
+          </article>
 
-            <label>
-              Observações
-              <textarea name="observacoes" rows="3" maxlength="180" placeholder="Ex: tirar cebola, enviar talheres, troco para R$ 100"></textarea>
-            </label>
+          <article class="product-card" data-category="Burgers" data-name="Bacon Melt" data-price="44">
+            <img src="assets/images/bacon-burger.png" alt="Bacon Melt" />
+            <div>
+              <span>Defumado</span>
+              <h3>Bacon Melt</h3>
+              <p>Queijo derretido, bacon crocante, cebola caramelizada e barbecue.</p>
+              <div class="product-order">
+                <strong>R$ 44</strong>
+                <button class="add-to-cart" type="button">Adicionar</button>
+              </div>
+            </div>
+          </article>
 
-            <p class="order-status" data-order-status aria-live="polite"></p>
-            <button class="button primary send-order" type="submit">Finalizar Pedido</button>
-            <p class="form-note">O pedido será enviado como mensagem. A equipe confirma valor final, entrega e horário.</p>
-          </form>
+          <article class="product-card" data-category="Burgers" data-name="Smash Duplo" data-price="42">
+            <img src="assets/images/bacon-burger.png" alt="Smash Duplo" />
+            <div>
+              <span>Clássico</span>
+              <h3>Smash Duplo</h3>
+              <p>Dois blends de 90g, cheddar duplo, picles e molho da casa.</p>
+              <div class="product-order">
+                <strong>R$ 42</strong>
+                <button class="add-to-cart" type="button">Adicionar</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="product-card" data-category="Pratos" data-name="Prato Quente" data-price="58">
+            <img src="assets/images/prato.png" alt="Prato quente com carne grelhada" />
+            <div>
+              <span>Na brasa</span>
+              <h3>Prato Quente</h3>
+              <p>Carne grelhada, legumes assados, arroz cremoso e molho da casa.</p>
+              <div class="product-order">
+                <strong>R$ 58</strong>
+                <button class="add-to-cart" type="button">Adicionar</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="product-card" data-category="Pratos" data-name="Costela na Chapa" data-price="46">
+            <img src="assets/images/costela.png" alt="Costela na Chapa" />
+            <div>
+              <span>Na chapa</span>
+              <h3>Costela na Chapa</h3>
+              <p>Costela macia, molho da casa e pão tostado na medida.</p>
+              <div class="product-order">
+                <strong>R$ 46</strong>
+                <button class="add-to-cart" type="button">Adicionar</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="product-card" data-category="Pratos" data-name="Massa da Casa" data-price="42">
+            <img src="assets/images/massa.png" alt="Massa da Casa" />
+            <div>
+              <span>Cremoso</span>
+              <h3>Massa da Casa</h3>
+              <p>Parmesão, tomate assado, molho artesanal e manjericão fresco.</p>
+              <div class="product-order">
+                <strong>R$ 42</strong>
+                <button class="add-to-cart" type="button">Adicionar</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="product-card" data-category="Porções" data-name="Fritas Temperadas" data-price="26">
+            <img src="assets/images/fritas.png" alt="Fritas Temperadas" />
+            <div>
+              <span>Crocante</span>
+              <h3>Fritas Temperadas</h3>
+              <p>Batata sequinha, páprica, sal da casa e maionese de alho.</p>
+              <div class="product-order">
+                <strong>R$ 26</strong>
+                <button class="add-to-cart" type="button">Adicionar</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="product-card" data-category="Bebidas" data-name="Limonada Fresh" data-price="14">
+            <img src="assets/images/limonada.png" alt="Limonada Fresh" />
+            <div>
+              <span>Gelada</span>
+              <h3>Limonada Fresh</h3>
+              <p>Limão, hortelã, bastante gelo e um toque cítrico.</p>
+              <div class="product-order">
+                <strong>R$ 14</strong>
+                <button class="add-to-cart" type="button">Adicionar</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="product-card" data-category="Bebidas" data-name="Drinks da Casa" data-price="18">
+            <img src="assets/images/bebidas.png" alt="Drinks da Casa" />
+            <div>
+              <span>Refrescante</span>
+              <h3>Drinks da Casa</h3>
+              <p>Seleção de bebidas geladas e refrescantes com cítricos.</p>
+              <div class="product-order">
+                <strong>R$ 18</strong>
+                <button class="add-to-cart" type="button">Adicionar</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="product-card" data-category="Doces" data-name="Brownie Quente" data-price="24">
+            <img src="assets/images/brownie.png" alt="Brownie Quente" />
+            <div>
+              <span>Sobremesa</span>
+              <h3>Brownie Quente</h3>
+              <p>Chocolate intenso, creme de baunilha e frutas vermelhas.</p>
+              <div class="product-order">
+                <strong>R$ 24</strong>
+                <button class="add-to-cart" type="button">Adicionar</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="how-card grain">
+            <span>Como pedir</span>
+            <h3>Escolheu? O carrinho organiza tudo.</h3>
+            <p>Adicione os itens, confira as quantidades e avance com segurança.</p>
+            <a href="#pedido" data-open-cart>Ir para o carrinho</a>
+          </article>
         </div>
       </section>
     </main>
 
-    <a class="mobile-order is-hidden" href="#pedido" aria-label="Abrir carrinho" data-floating-cart>
-      <svg aria-hidden="true" viewBox="0 0 24 24">
-        <path d="M6.2 6h15l-1.7 8.2a2 2 0 0 1-2 1.6H9.3a2 2 0 0 1-2-1.7L5.8 4.8H3" />
-        <circle cx="9.5" cy="20" r="1.4" />
-        <circle cx="17.5" cy="20" r="1.4" />
-      </svg>
-      <span data-floating-count>0</span>
-    </a>
-
-    <footer class="footer">
-      <div>
-        <span>Mordida Quente Demo</span>
+    <footer class="site-footer">
+      <div class="footer-main">
+        <div class="footer-brand">
+          <span class="brand-mark">MQ</span>
+          <strong>Mordida Quente</strong>
+        </div>
+        <p>
+          Burger artesanal feito na chapa, com pães macios e carne suculenta.
+          Peça online e receba quentinho.
+        </p>
       </div>
-      <a href="#inicio">Voltar ao topo</a>
+      <div class="footer-group">
+        <h2>Atendimento</h2>
+        <p>Ter a Dom · 18h às 23h</p>
+        <p>(11) 99999-9999</p>
+        <p>Rua das Brasas, 123 · São Paulo</p>
+      </div>
+      <nav class="footer-group" aria-label="Navegação do rodapé">
+        <h2>Navegação</h2>
+        <a href="#destaques">Destaques</a>
+        <a href="#cardapio">Cardápio</a>
+        <a href="#pedido" data-open-cart>Pedido</a>
+      </nav>
+      <div class="footer-bottom">
+        <p>© 2026 Mordida Quente Demo · Todos os direitos reservados.</p>
+        <a href="#inicio">Voltar ao topo ↑</a>
+      </div>
     </footer>
 
-    <script src="./script.js"></script>
+    <aside class="cart-drawer" id="pedido" data-cart-drawer aria-hidden="true">
+      <div class="drawer-screen cart-screen" data-drawer-screen="cart">
+        <header class="drawer-header">
+          <div class="drawer-title">
+            <span class="drawer-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" focusable="false">
+                <path d="M6.5 8.5h11l-1 9h-9l-1-9Z"></path>
+                <path d="M9 8.5a3 3 0 0 1 6 0"></path>
+              </svg>
+            </span>
+            <div>
+              <strong>Seu pedido</strong>
+              <small data-cart-count>0 itens</small>
+            </div>
+          </div>
+          <button class="drawer-close" type="button" data-close-cart aria-label="Fechar carrinho">×</button>
+        </header>
+
+        <div class="drawer-body">
+          <div class="cart-items" data-cart-items>
+            <p class="empty-cart">Seu carrinho ainda está vazio. Escolha um item do cardápio para começar.</p>
+          </div>
+        </div>
+
+        <footer class="drawer-footer">
+          <div class="drawer-total">
+            <span>Subtotal</span>
+            <strong data-cart-total>R$ 0</strong>
+          </div>
+          <p>Frete e tempo de entrega combinados na confirmação.</p>
+          <button class="drawer-primary" type="button" data-confirm-items>Confirmar itens →</button>
+          <button class="drawer-secondary" type="button" data-clear-cart hidden>Limpar carrinho</button>
+        </footer>
+      </div>
+
+      <form class="drawer-screen checkout-screen" data-drawer-screen="checkout" data-order-form hidden>
+        <header class="drawer-header">
+          <div class="drawer-title">
+            <button class="drawer-back" type="button" data-back-cart aria-label="Voltar ao carrinho">←</button>
+            <div>
+              <strong>Finalizar pedido</strong>
+              <small>Entrega e pagamento</small>
+            </div>
+          </div>
+          <button class="drawer-close" type="button" data-close-cart aria-label="Fechar checkout">×</button>
+        </header>
+
+        <div class="drawer-body drawer-form">
+          <label>
+            <span>Endereço completo</span>
+            <input name="endereco" type="text" placeholder="Rua, número, bairro" autocomplete="street-address" required />
+          </label>
+          <label>
+            <span>Ponto de referência</span>
+            <input name="referencia" type="text" placeholder="Ex: portão azul, ao lado da padaria" />
+          </label>
+          <fieldset>
+            <legend>Forma de pagamento</legend>
+            <label><input type="radio" name="pagamento" value="Pix" checked /> Pix</label>
+            <label><input type="radio" name="pagamento" value="Crédito" /> Crédito</label>
+            <label><input type="radio" name="pagamento" value="Débito" /> Débito</label>
+          </fieldset>
+          <label>
+            <span>Observações</span>
+            <textarea name="observacoes" rows="4" placeholder="Ex: sem cebola, troco para R$ 100..."></textarea>
+          </label>
+          <p class="form-status" data-form-status></p>
+        </div>
+
+        <footer class="drawer-footer">
+          <div class="drawer-total">
+            <span>Total</span>
+            <strong data-checkout-total>R$ 0</strong>
+          </div>
+          <button class="drawer-primary" type="submit">Confirmar informações →</button>
+        </footer>
+      </form>
+
+      <div class="drawer-screen review-screen" data-drawer-screen="review" data-order-review hidden>
+        <header class="drawer-header">
+          <div class="drawer-title">
+            <button class="drawer-back" type="button" data-review-back aria-label="Editar informações">←</button>
+            <div>
+              <strong>Resumo do pedido</strong>
+              <small>Confira antes de finalizar</small>
+            </div>
+          </div>
+          <button class="drawer-close" type="button" data-close-cart aria-label="Fechar resumo">×</button>
+        </header>
+
+        <div class="drawer-body">
+          <div class="review-block">
+            <h3>Itens</h3>
+            <div data-review-items></div>
+          </div>
+          <div class="review-block">
+            <h3>Entrega e pagamento</h3>
+            <div data-review-info></div>
+          </div>
+          <p class="form-status" data-review-status></p>
+        </div>
+
+        <footer class="drawer-footer">
+          <div class="drawer-total">
+            <span>Total</span>
+            <strong data-review-total>R$ 0</strong>
+          </div>
+          <button class="drawer-primary" type="button" data-finalize-order>Finalizar Pedido →</button>
+        </footer>
+      </div>
+    </aside>
+
+    <a class="floating-cart is-hidden" href="#pedido" data-floating-cart data-open-cart aria-label="Abrir carrinho">
+      <span data-floating-count>0</span>
+      Ver pedido
+    </a>
+
+    <script src="script.js"></script>
   </body>
 </html>

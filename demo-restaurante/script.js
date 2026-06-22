@@ -1,89 +1,44 @@
-document.documentElement.classList.add("js-enabled");
+const money = new Intl.NumberFormat("pt-BR", {
+  style: "currency",
+  currency: "BRL",
+  maximumFractionDigits: 0,
+});
 
-const isTouchDevice = window.matchMedia("(hover: none), (pointer: coarse)").matches;
-const revealItems = document.querySelectorAll(
-  ".hero-panel, .snap-strip article, .section-heading, .combo-card, .menu-header, .tabs, .product-card, .order-heading, .order-layout, .footer"
-);
+const cartStorageKey = "mordida-quente-premium-cart";
+const whatsappNumber = "5500000000000";
 
-function showRevealItem(item) {
-  if (item.classList.contains("is-visible")) {
-    return;
-  }
+const cart = new Map();
+let confirmedOrder = null;
 
-  window.requestAnimationFrame(() => {
-    item.classList.add("is-visible");
-  });
-}
-
-function hideRevealItem(item) {
-  window.requestAnimationFrame(() => {
-    item.classList.remove("is-visible");
-  });
-}
-
-function initRevealAnimations() {
-  if (!revealItems.length) return;
-
-  revealItems.forEach((item) => item.classList.add("reveal"));
-
-  if (!("IntersectionObserver" in window)) {
-    revealItems.forEach((item) => item.classList.add("is-visible"));
-    return;
-  }
-
-  const revealObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          showRevealItem(entry.target);
-        } else {
-          hideRevealItem(entry.target);
-        }
-      });
-    },
-    {
-      rootMargin: "0px 0px 12% 0px",
-      threshold: 0.04
-    }
-  );
-
-  revealItems.forEach((item, index) => {
-    const itemDelay = item.dataset.revealDelay || (isTouchDevice ? Math.min(index * 16, 80) : Math.min(index * 35, 180));
-    item.style.transitionDelay = `${itemDelay}ms`;
-    revealObserver.observe(item);
-  });
-}
-
-initRevealAnimations();
-
-const tabs = document.querySelectorAll(".tab");
-const products = document.querySelectorAll(".product-card");
-const addButtons = document.querySelectorAll(".add-button");
+const productCards = document.querySelectorAll("[data-category]");
+const filters = document.querySelectorAll("[data-filter]");
+const addButtons = document.querySelectorAll(".add-to-cart");
+const openCartButtons = document.querySelectorAll("[data-open-cart]");
+const closeCartButtons = document.querySelectorAll("[data-close-cart]");
+const cartDrawer = document.querySelector("[data-cart-drawer]");
 const cartItems = document.querySelector("[data-cart-items]");
 const cartCount = document.querySelector("[data-cart-count]");
-const headerCount = document.querySelector("[data-header-count]");
 const cartTotal = document.querySelector("[data-cart-total]");
-const orderForm = document.querySelector("[data-order-form]");
-const clearCartButton = document.querySelector("[data-clear-cart]");
-const orderStatus = document.querySelector("[data-order-status]");
-const cartLink = document.querySelector(".cart-link");
-const smartOrderLinks = document.querySelectorAll("[data-smart-order]");
+const cartBadge = document.querySelector("[data-cart-badge]");
+const checkoutTotal = document.querySelector("[data-checkout-total]");
 const floatingCart = document.querySelector("[data-floating-cart]");
 const floatingCount = document.querySelector("[data-floating-count]");
-
-const whatsappNumber = "5500000000000";
-const cartStorageKey = "mordida-quente-cart";
-const cart = new Map();
-
-const formatCurrency = (value) =>
-  new Intl.NumberFormat("pt-BR", {
-    style: "currency",
-    currency: "BRL",
-    maximumFractionDigits: 0,
-  }).format(value);
+const clearCartButton = document.querySelector("[data-clear-cart]");
+const confirmItemsButton = document.querySelector("[data-confirm-items]");
+const backCartButton = document.querySelector("[data-back-cart]");
+const orderForm = document.querySelector("[data-order-form]");
+const formStatus = document.querySelector("[data-form-status]");
+const orderReview = document.querySelector("[data-order-review]");
+const reviewItems = document.querySelector("[data-review-items]");
+const reviewInfo = document.querySelector("[data-review-info]");
+const reviewTotal = document.querySelector("[data-review-total]");
+const reviewBack = document.querySelector("[data-review-back]");
+const reviewStatus = document.querySelector("[data-review-status]");
+const finalizeOrder = document.querySelector("[data-finalize-order]");
+const drawerScreens = document.querySelectorAll("[data-drawer-screen]");
 
 const escapeHTML = (value) =>
-  String(value).replace(/[&<>"']/g, (character) => {
+  String(value).replace(/[&<>"']/g, (char) => {
     const entities = {
       "&": "&amp;",
       "<": "&lt;",
@@ -91,39 +46,57 @@ const escapeHTML = (value) =>
       '"': "&quot;",
       "'": "&#039;",
     };
-
-    return entities[character];
+    return entities[char];
   });
 
-const setOrderStatus = (message, type = "error") => {
-  orderStatus.textContent = message;
-  orderStatus.className = `order-status is-visible is-${type}`;
+const formatMoney = (value) => money.format(value);
+const getCartItems = () => [...cart.values()];
+
+const getTotals = () => {
+  const items = getCartItems();
+  return {
+    count: items.reduce((sum, item) => sum + item.quantity, 0),
+    total: items.reduce((sum, item) => sum + item.price * item.quantity, 0),
+  };
 };
 
-const clearOrderStatus = () => {
-  orderStatus.textContent = "";
-  orderStatus.className = "order-status";
+const setDrawerScreen = (screenName) => {
+  drawerScreens.forEach((screen) => {
+    screen.hidden = screen.dataset.drawerScreen !== screenName;
+  });
+};
+
+const openCart = (screenName = "cart") => {
+  setDrawerScreen(screenName);
+  cartDrawer.classList.add("is-open");
+  cartDrawer.setAttribute("aria-hidden", "false");
+  updateFloatingCart(getTotals().count);
+};
+
+const closeCart = () => {
+  cartDrawer.classList.remove("is-open");
+  cartDrawer.setAttribute("aria-hidden", "true");
+  updateFloatingCart(getTotals().count);
 };
 
 const saveCart = () => {
-  try {
-    localStorage.setItem(cartStorageKey, JSON.stringify([...cart.values()]));
-  } catch {
-    // O carrinho continua funcionando mesmo se o navegador bloquear storage.
-  }
+  localStorage.setItem(cartStorageKey, JSON.stringify(getCartItems()));
 };
 
 const loadCart = () => {
   try {
-    const savedItems = JSON.parse(localStorage.getItem(cartStorageKey) || "[]");
+    const saved = JSON.parse(localStorage.getItem(cartStorageKey) || "[]");
+    if (!Array.isArray(saved)) return;
 
-    savedItems.forEach((item) => {
-      if (!item.name || !Number.isFinite(item.price) || !Number.isFinite(item.quantity)) return;
-
+    saved.forEach((item) => {
+      if (!item.name || !Number.isFinite(item.price) || !Number.isFinite(item.quantity)) {
+        return;
+      }
       cart.set(item.name, {
         name: item.name,
         price: item.price,
-        quantity: Math.max(1, Math.min(item.quantity, 99)),
+        image: item.image || "assets/images/hero-burger.png",
+        quantity: Math.max(1, item.quantity),
       });
     });
   } catch {
@@ -131,24 +104,30 @@ const loadCart = () => {
   }
 };
 
+const updateFloatingCart = (count) => {
+  if (!floatingCart || !floatingCount) return;
+
+  floatingCount.textContent = count;
+  const drawerOpen = cartDrawer.classList.contains("is-open");
+  floatingCart.classList.toggle("is-hidden", count === 0 || drawerOpen);
+};
+
 const renderCart = () => {
-  const items = [...cart.values()];
-  const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
-  const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const items = getCartItems();
+  const { count, total } = getTotals();
 
-  cartCount.textContent = totalItems === 1 ? "1 item" : `${totalItems} itens`;
-  headerCount.textContent = totalItems;
-  floatingCount.textContent = totalItems;
-  cartTotal.textContent = formatCurrency(total);
-  floatingCart.classList.toggle("is-hidden", totalItems === 0);
-  clearCartButton.hidden = totalItems === 0;
-  smartOrderLinks.forEach((link) => {
-    link.setAttribute("href", totalItems > 0 ? "#pedido" : "#cardapio");
-  });
+  cartCount.textContent = count === 1 ? "1 item" : `${count} itens`;
+  cartTotal.textContent = formatMoney(total);
+  checkoutTotal.textContent = formatMoney(total);
+  cartBadge.textContent = count;
+  clearCartButton.hidden = count === 0;
+  updateFloatingCart(count);
 
-  if (!items.length) {
+  if (items.length === 0) {
     cartItems.innerHTML =
       '<p class="empty-cart">Seu carrinho ainda está vazio. Escolha um item do cardápio para começar.</p>';
+    confirmedOrder = null;
+    saveCart();
     return;
   }
 
@@ -156,83 +135,102 @@ const renderCart = () => {
     .map(
       (item) => `
         <article class="cart-item">
+          <figure class="cart-thumb">
+            <img src="${escapeHTML(item.image)}" alt="${escapeHTML(item.name)}" />
+          </figure>
           <div>
             <strong>${escapeHTML(item.name)}</strong>
-            <small>${item.quantity}x ${formatCurrency(item.price)}</small>
+            <small>${formatMoney(item.price)}</small>
+            <div class="cart-controls" aria-label="Quantidade de ${escapeHTML(item.name)}">
+              <button type="button" data-cart-action="decrease" data-name="${escapeHTML(item.name)}">-</button>
+              <span>${item.quantity}</span>
+              <button type="button" data-cart-action="increase" data-name="${escapeHTML(item.name)}">+</button>
+            </div>
           </div>
-          <div class="cart-controls" aria-label="Quantidade de ${escapeHTML(item.name)}">
-            <button type="button" data-cart-action="decrease" data-name="${escapeHTML(item.name)}">-</button>
-            <span>${item.quantity}</span>
-            <button type="button" data-cart-action="increase" data-name="${escapeHTML(item.name)}">+</button>
-          </div>
+          <strong class="cart-line-total">${formatMoney(item.price * item.quantity)}</strong>
+          <button class="remove-item" type="button" data-cart-action="remove" data-name="${escapeHTML(item.name)}" aria-label="Remover ${escapeHTML(item.name)}">×</button>
         </article>
-      `
+      `,
     )
     .join("");
-};
 
-const syncView = () => {
-  document.body.classList.toggle("order-view", window.location.hash === "#pedido");
-};
-
-const addToCart = (name, price) => {
-  const current = cart.get(name) || { name, price, quantity: 0 };
-  current.quantity += 1;
-  cart.set(name, current);
-  clearOrderStatus();
   saveCart();
-  renderCart();
 };
 
-tabs.forEach((tab) => {
-  tab.addEventListener("click", () => {
-    const filter = tab.dataset.filter;
+const addToCart = (item) => {
+  const current = cart.get(item.name) || { ...item, quantity: 0 };
+  current.quantity += 1;
+  cart.set(item.name, current);
+  confirmedOrder = null;
+  renderCart();
+  openCart("cart");
+};
 
-    tabs.forEach((item) => item.classList.remove("active"));
-    tab.classList.add("active");
+const getProductData = (button) => {
+  const card = button.closest("[data-name][data-price]");
+  if (!card) return null;
 
-    products.forEach((product) => {
-      const category = product.dataset.category;
-      const visible = filter === "todos" || category === filter || category === "todos";
+  const price = Number(card.dataset.price);
+  const image = card.querySelector("img")?.getAttribute("src") || "assets/images/hero-burger.png";
+  if (!card.dataset.name || !Number.isFinite(price)) return null;
 
-      product.classList.toggle("is-hidden", !visible);
+  return {
+    name: card.dataset.name,
+    price,
+    image,
+  };
+};
 
-      if (visible) {
-        product.animate(
-          [
-            { opacity: 0, transform: "translateY(14px) scale(.98)" },
-            { opacity: 1, transform: "translateY(0) scale(1)" },
-          ],
-          {
-            duration: 280,
-            easing: "cubic-bezier(.16, 1, .3, 1)",
-          }
-        );
-      }
+filters.forEach((filter) => {
+  filter.addEventListener("click", () => {
+    const active = filter.dataset.filter;
+
+    filters.forEach((item) => {
+      item.classList.toggle("active", item === filter);
+      item.setAttribute("aria-selected", item === filter ? "true" : "false");
+    });
+
+    productCards.forEach((card) => {
+      const visible = active === "Todos" || card.dataset.category === active;
+      card.hidden = !visible;
     });
   });
 });
 
 addButtons.forEach((button) => {
   button.addEventListener("click", () => {
-    const card = button.closest("[data-name][data-price]");
-    const name = card.dataset.name;
-    const price = Number(card.dataset.price);
+    const item = getProductData(button);
+    if (!item) return;
 
-    addToCart(name, price);
-    cartLink.classList.remove("bump");
-    void cartLink.offsetWidth;
-    cartLink.classList.add("bump");
-    button.classList.add("added");
+    addToCart(item);
+    button.classList.add("is-added");
     button.textContent = "Adicionado";
+
     window.setTimeout(() => {
-      button.textContent = "Adicionar";
-      button.classList.remove("added");
-    }, 900);
+      button.classList.remove("is-added");
+      button.textContent = button.classList.contains("button")
+        ? "Adicionar ao pedido"
+        : "Adicionar";
+    }, 1000);
   });
 });
 
-window.addEventListener("hashchange", syncView);
+openCartButtons.forEach((button) => {
+  button.addEventListener("click", (event) => {
+    event.preventDefault();
+    openCart("cart");
+  });
+});
+
+closeCartButtons.forEach((button) => {
+  button.addEventListener("click", closeCart);
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && cartDrawer.classList.contains("is-open")) {
+    closeCart();
+  }
+});
 
 cartItems.addEventListener("click", (event) => {
   const button = event.target.closest("[data-cart-action]");
@@ -243,66 +241,160 @@ cartItems.addEventListener("click", (event) => {
 
   if (button.dataset.cartAction === "increase") {
     item.quantity += 1;
-  } else {
-    item.quantity -= 1;
-  }
-
-  if (item.quantity <= 0) {
-    cart.delete(item.name);
-  } else {
     cart.set(item.name, item);
   }
 
-  saveCart();
+  if (button.dataset.cartAction === "decrease") {
+    item.quantity -= 1;
+    if (item.quantity <= 0) {
+      cart.delete(item.name);
+    } else {
+      cart.set(item.name, item);
+    }
+  }
+
+  if (button.dataset.cartAction === "remove") {
+    cart.delete(item.name);
+  }
+
+  confirmedOrder = null;
   renderCart();
 });
 
 clearCartButton.addEventListener("click", () => {
   cart.clear();
-  saveCart();
-  clearOrderStatus();
+  confirmedOrder = null;
+  orderForm.reset();
   renderCart();
+  setDrawerScreen("cart");
 });
+
+confirmItemsButton.addEventListener("click", () => {
+  if (getCartItems().length === 0) return;
+  setDrawerScreen("checkout");
+});
+
+backCartButton.addEventListener("click", () => {
+  setDrawerScreen("cart");
+});
+
+const showStatus = (target, message) => {
+  target.textContent = message;
+};
+
+const collectFormData = () => {
+  const data = new FormData(orderForm);
+  return {
+    endereco: String(data.get("endereco") || "").trim(),
+    referencia: String(data.get("referencia") || "").trim(),
+    pagamento: String(data.get("pagamento") || "Pix").trim(),
+    observacoes: String(data.get("observacoes") || "").trim(),
+  };
+};
+
+const renderReview = (items, data) => {
+  const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+  reviewItems.innerHTML = items
+    .map(
+      (item) => `
+        <article class="review-item">
+          <div>
+            <strong>${item.quantity}x ${escapeHTML(item.name)}</strong>
+            <small>${formatMoney(item.price)} cada.</small>
+          </div>
+          <strong>${formatMoney(item.price * item.quantity)}</strong>
+        </article>
+      `,
+    )
+    .join("");
+
+  reviewInfo.innerHTML = `
+    <div class="review-info">
+      <span><strong>Endereço:</strong> ${escapeHTML(data.endereco)}</span>
+      <span><strong>Referência:</strong> ${escapeHTML(data.referencia || "Não informado.")}</span>
+      <span><strong>Pagamento:</strong> ${escapeHTML(data.pagamento)}</span>
+      <span><strong>Observações:</strong> ${escapeHTML(data.observacoes || "Nenhuma.")}</span>
+    </div>
+  `;
+
+  reviewTotal.textContent = formatMoney(total);
+};
 
 orderForm.addEventListener("submit", (event) => {
   event.preventDefault();
-  clearOrderStatus();
+  showStatus(formStatus, "");
 
-  const items = [...cart.values()];
-  if (!items.length) {
-    setOrderStatus("Adicione pelo menos um item ao carrinho antes de finalizar o pedido.");
-    cartItems.scrollIntoView({ behavior: "smooth", block: "center" });
+  const items = getCartItems();
+  if (items.length === 0) {
+    showStatus(formStatus, "Adicione pelo menos um item antes de confirmar.");
+    setDrawerScreen("cart");
     return;
   }
 
-  if (!orderForm.checkValidity()) {
-    orderForm.reportValidity();
+  const data = collectFormData();
+  if (!data.endereco) {
+    showStatus(formStatus, "Informe o endereço de entrega para continuar.");
     return;
   }
 
-  const data = new FormData(orderForm);
-  const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const payment = data.get("pagamento");
+  confirmedOrder = {
+    items: items.map((item) => ({ ...item })),
+    data,
+  };
 
-  const orderLines = items
-    .map((item) => `- ${item.quantity}x ${item.name} (${formatCurrency(item.price)} cada)`)
+  renderReview(confirmedOrder.items, confirmedOrder.data);
+  showStatus(reviewStatus, "");
+  setDrawerScreen("review");
+});
+
+reviewBack.addEventListener("click", () => {
+  setDrawerScreen("checkout");
+});
+
+finalizeOrder.addEventListener("click", () => {
+  if (!confirmedOrder) {
+    showStatus(reviewStatus, "Confirme suas informações antes de finalizar.");
+    return;
+  }
+
+  const currentItems = getCartItems();
+  const currentTotal = currentItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const orderLines = currentItems
+    .map((item) => `${item.quantity}x ${item.name} - ${formatMoney(item.price * item.quantity)}`)
     .join("\n");
+  const data = confirmedOrder.data;
 
-  const message = `Olá! Quero fazer um pedido no Mordida Quente.\n\nPedido:\n${orderLines}\n\nTotal estimado: ${formatCurrency(total)}\n\nNome: ${data.get("nome") || "Não informado"}\nTelefone: ${data.get("telefone") || "Não informado"}\nEndereço: ${data.get("endereco") || "Não informado"}\nComplemento/referência: ${data.get("referencia") || "Não informado"}\nPagamento: ${payment}\nObservações: ${data.get("observacoes") || "Nenhuma"}\n\nPode confirmar meu pedido?`;
+  const message = [
+    "*NOVO PEDIDO — Mordida Quente*",
+    "",
+    "*Itens:*",
+    orderLines,
+    "",
+    `*Total:* ${formatMoney(currentTotal)}`,
+    "",
+    "*Entrega*",
+    `Endereço: ${data.endereco}`,
+    `Referência: ${data.referencia || "Não informado"}`,
+    "",
+    `*Pagamento:* ${data.pagamento}`,
+  ];
 
-  const whatsappWindow = window.open(
-    `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`,
-    "_blank"
+  if (data.observacoes) {
+    message.push("", `*Observações:* ${data.observacoes}`);
+  }
+
+  const popup = window.open(
+    `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message.join("\n"))}`,
+    "_blank",
+    "noopener,noreferrer",
   );
 
-  if (!whatsappWindow) {
-    setOrderStatus("Não consegui abrir o WhatsApp automaticamente. Verifique o bloqueador de pop-ups do navegador.");
-    return;
+  if (!popup) {
+    showStatus(reviewStatus, "Não foi possível abrir o WhatsApp. Verifique o bloqueador de pop-up.");
   }
-
-  setOrderStatus("Pedido organizado. O WhatsApp foi aberto para confirmar o envio.", "success");
 });
 
 loadCart();
 renderCart();
-syncView();
+setDrawerScreen("cart");
