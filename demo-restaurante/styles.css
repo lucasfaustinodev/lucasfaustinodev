@@ -352,7 +352,7 @@ button {
 }
 
 .hero-rating {
-  display: flex;
+  display: none;
   flex-wrap: wrap;
   align-items: center;
   gap: 8px 14px;
@@ -1415,9 +1415,10 @@ button {
 
   .header-shell {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-columns: minmax(0, 1fr) 42px;
+    gap: 8px;
     height: 64px;
-    padding: 0 10px;
+    padding: 0 8px;
   }
 
   .header-actions {
@@ -1425,10 +1426,10 @@ button {
   }
 
   .cart-button {
-    position: fixed;
-    top: 26px;
-    right: 22px;
-    z-index: 80;
+    position: relative;
+    top: auto;
+    right: auto;
+    z-index: 2;
     display: grid;
     place-items: center;
     color: var(--ink);
@@ -1436,10 +1437,11 @@ button {
 
   .brand {
     min-width: 0;
+    gap: 10px;
   }
 
   .brand-text strong {
-    max-width: 128px;
+    max-width: 190px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -1479,13 +1481,11 @@ button {
     padding: 28px 18px 34px;
   }
 
-  .hero-copy,
-  .hero-rating {
+  .hero-copy {
     text-align: center;
   }
 
-  .hero-tag,
-  .hero-rating {
+  .hero-tag {
     justify-content: center;
   }
 
@@ -1517,32 +1517,52 @@ button {
   }
 
   .category-strip {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(116px, 1fr));
     gap: 10px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x proximity;
     margin-top: 24px;
+    padding-bottom: 4px;
   }
 
   .category-card {
+    min-width: 116px;
     padding: 6px;
     border-radius: 18px;
+    scroll-snap-align: start;
   }
 
   .category-card:nth-child(3) {
-    grid-column: 1 / -1;
+    grid-column: auto;
   }
 
   .category-card img {
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 1 / 0.9;
     border-radius: 14px;
   }
 
   .category-card:nth-child(3) img {
-    aspect-ratio: 16 / 7;
+    aspect-ratio: 1 / 0.9;
   }
 
   .category-card span {
     padding: 9px 4px 6px;
     font-size: 0.9rem;
+  }
+
+  .filters {
+    flex-wrap: nowrap;
+    gap: 10px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x proximity;
+    padding-bottom: 6px;
+  }
+
+  .filter {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
   }
 
   .section {
@@ -1631,6 +1651,10 @@ button {
   .cart-button {
     width: 40px;
     height: 40px;
+  }
+
+  .brand-text strong {
+    max-width: 174px;
   }
 
   .cart-icon {
