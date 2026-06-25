@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Studio Demo | Beauty Lounge</title>
+    <meta
+      name="description"
+      content="Landing page de demonstração para salão de beleza com serviços, valores de referência e agendamento."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="site-header">
+        <a class="brand" href="#inicio" aria-label="Studio Demo Beauty Lounge">
+          <span class="brand-logo demo-brand-mark" aria-hidden="true">SD</span>
+          <span>
+            <strong>Studio Demo</strong>
+            <small>Beauty Lounge</small>
+          </span>
+        </a>
+
+        <nav class="nav-links" aria-label="Navegação principal">
+          <a href="#trabalhos">Trabalhos</a>
+          <a href="#servicos">Serviços</a>
+          <a href="#valores">Valores</a>
+          <a href="#agendar">Agendar</a>
+        </nav>
+
+        <a class="header-cta" href="#agendar">Agendar horário</a>
+      </header>
+
+      <main>
+        <section class="hero" id="inicio">
+          <div class="hero-copy reveal" data-reveal-delay="80">
+            <span class="eyebrow">Beleza com hora marcada</span>
+            <h1>Seu momento de beleza, com cuidado em cada detalhe.</h1>
+            <p>
+              Unhas, sobrancelhas e cabelo com atendimento cuidadoso, acabamento
+              caprichado e horário reservado para você.
+            </p>
+
+            <div class="hero-actions">
+              <a class="button primary" href="#agendar">Agendar horário</a>
+              <a class="hero-text-link" href="#trabalhos">Ver trabalhos recentes</a>
+            </div>
+          </div>
+
+          <div class="hero-visual reveal" data-reveal-delay="180">
+            <div class="hero-logo-card">
+              <div class="hero-demo-mark" aria-hidden="true">SD</div>
+            </div>
+            <div class="hero-card">
+              <img
+                src="./assets/images/unha-azul-marinho.png"
+                alt="Unhas em tons nude e rosé com acabamento elegante"
+              />
+              <div class="floating-note">
+                <span>Atendimento com hora marcada</span>
+                <strong>Escolha o serviço e reserve um horário para cuidar de você.</strong>
+              </div>
+            </div>
+            <div class="accent-orbit" aria-hidden="true"></div>
+          </div>
+        </section>
+
+        <section class="section gallery-section" id="trabalhos">
+          <div class="section-heading reveal">
+            <span class="eyebrow">Trabalhos recentes</span>
+            <h2>Delicadeza, estilo e cuidado nos detalhes.</h2>
+            <p>
+              Veja alguns estilos de unhas para escolher uma referência antes de
+              reservar seu horário.
+            </p>
+          </div>
+
+          <div class="gallery-grid">
+            <button class="gallery-item reveal" type="button" data-image="./assets/images/unha-azul-marinho-portfolio.png">
+              <img src="./assets/images/unha-azul-marinho-portfolio.png" alt="Unhas francesinhas suaves com detalhe delicado" />
+              <span>Francesinha suave</span>
+            </button>
+            <button class="gallery-item reveal" type="button" data-image="./assets/images/unha-branca-dourada.png">
+              <img src="./assets/images/unha-branca-dourada.png" alt="Unhas em tons intensos com acabamento sofisticado" />
+              <span>Elegância intensa</span>
+            </button>
+            <button class="gallery-item reveal" type="button" data-image="./assets/images/unha-nude-delicada.png">
+              <img src="./assets/images/unha-nude-delicada.png" alt="Unhas nude com brilho suave e linhas delicadas" />
+              <span>Nude com brilho</span>
+            </button>
+            <button class="gallery-item reveal" type="button" data-image="./assets/images/unha-cinza-glitter.png">
+              <img src="./assets/images/unha-cinza-glitter.png" alt="Unhas em azul claro com acabamento delicado" />
+              <span>Azul delicado</span>
+            </button>
+          </div>
+        </section>
+
+        <section class="section services" id="servicos">
+          <div class="section-heading reveal">
+            <span class="eyebrow">Serviços</span>
+            <h2>Escolha o serviço ideal para você.</h2>
+            <p>
+              Serviços para mãos, pés, sobrancelhas e cabelo, organizados para
+              você encontrar rápido o que precisa.
+            </p>
+          </div>
+
+          <div class="service-grid">
+            <article class="service-card reveal">
+              <span>01</span>
+              <h3>Manicure</h3>
+              <p>Esmaltação tradicional, cutilagem e acabamento delicado para valorizar as mãos.</p>
+            </article>
+            <article class="service-card reveal">
+              <span>02</span>
+              <h3>Pedicure</h3>
+              <p>Cuidado com os pés para deixar o visual limpo, bonito e confortável.</p>
+            </article>
+            <article class="service-card reveal">
+              <span>03</span>
+              <h3>Alongamentos</h3>
+              <p>Fibra e manutenção para quem busca unhas mais resistentes e elegantes.</p>
+            </article>
+            <article class="service-card reveal">
+              <span>04</span>
+              <h3>Sobrancelhas</h3>
+              <p>Design, henna e cuidado para realçar a expressão com naturalidade.</p>
+            </article>
+            <article class="service-card reveal">
+              <span>05</span>
+              <h3>Cabelo</h3>
+              <p>Corte, escova, tratamento capilar e finalizações para renovar o visual.</p>
+            </article>
+            <article class="service-card reveal">
+              <span>06</span>
+              <h3>Alisamentos</h3>
+              <p>Progressiva com ou sem formol, indicada conforme o objetivo e o comprimento do cabelo.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="section price-section" id="valores">
+          <div class="section-heading reveal">
+            <span class="eyebrow">Valores</span>
+            <h2>Valores dos serviços.</h2>
+            <p>
+              Confira os valores de referência antes de agendar. Alguns serviços
+              podem variar conforme a técnica, o tamanho ou a avaliação no atendimento.
+            </p>
+          </div>
+
+          <div class="price-board reveal" aria-label="Valores dos serviços">
+            <div class="price-row">
+              <span>Manicure tradicional</span>
+              <strong>R$ 35 a R$ 50</strong>
+            </div>
+            <div class="price-row">
+              <span>Pedicure</span>
+              <strong>R$ 40 a R$ 55</strong>
+            </div>
+            <div class="price-row">
+              <span>Alongamento em fibra</span>
+              <strong>R$ 140 a R$ 180</strong>
+            </div>
+            <div class="price-row">
+              <span>Cabelo</span>
+              <strong>A partir de R$ 50</strong>
+            </div>
+            <div class="price-row">
+              <span>Sobrancelha</span>
+              <strong>A partir de R$ 15</strong>
+            </div>
+            <div class="price-row">
+              <span>Alisamento</span>
+              <strong>R$ 140 a R$ 260</strong>
+            </div>
+          </div>
+        </section>
+
+        <section class="section booking-section" id="agendar">
+          <div class="booking-panel reveal">
+            <div class="booking-info">
+              <span class="eyebrow">Agendamento</span>
+              <h2>Reserve seu horário.</h2>
+              <p>
+                Envie o serviço desejado, o melhor dia e o horário de preferência.
+                A confirmação será feita conforme a disponibilidade da agenda.
+              </p>
+              <ul>
+                <li>
+                  <strong>Atendimento</strong>
+                  <span>Somente com horário marcado</span>
+                </li>
+                <li>
+                  <strong>Endereço</strong>
+                  <span>Avenida Exemplo, 123 - Centro</span>
+                </li>
+                <li>
+                  <strong>Contato</strong>
+                  <span>(00) 00000-0000</span>
+                </li>
+              </ul>
+            </div>
+
+            <form class="booking-form" id="bookingForm">
+              <label>
+                Seu nome
+                <input id="clientName" name="clientName" type="text" placeholder="Ex: Maria" required />
+              </label>
+
+              <label>
+                Serviço desejado
+                <select id="serviceName" name="serviceName" required>
+                  <option value="">Escolha uma opção</option>
+                  <option>Manicure</option>
+                  <option>Pedicure</option>
+                  <option>Manicure e pedicure</option>
+                  <option>Alongamento em fibra</option>
+                  <option>Sobrancelhas</option>
+                  <option>Corte ou escova</option>
+                  <option>Progressiva</option>
+                  <option>Outro serviço de beleza</option>
+                </select>
+              </label>
+
+              <div class="form-row">
+                <label>
+                  Melhor dia
+                  <input id="preferredDate" name="preferredDate" type="text" placeholder="Ex: sexta-feira" />
+                </label>
+
+                <label>
+                  Horário de preferência
+                  <input id="preferredTime" name="preferredTime" type="text" placeholder="Ex: 14h" />
+                </label>
+              </div>
+
+              <label>
+                Observações
+                <textarea
+                  id="notes"
+                  name="notes"
+                  rows="4"
+                  placeholder="Ex: quero uma cor nude com detalhe delicado."
+                ></textarea>
+              </label>
+
+              <button class="button primary full" type="submit">Solicitar agendamento</button>
+            </form>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <p>Studio Demo | Beauty Lounge</p>
+        <span>Instagram: @studiodemo.beauty</span>
+        <a href="#agendar">Agendar horário</a>
+      </footer>
+    </div>
+
+    <a class="whatsapp-float" href="#agendar" aria-label="Ir para agendamento">Agendar horário</a>
+
+    <div class="lightbox" id="lightbox" aria-hidden="true">
+      <button class="lightbox-close" type="button" aria-label="Fechar imagem">x</button>
+      <img alt="" />
+    </div>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
