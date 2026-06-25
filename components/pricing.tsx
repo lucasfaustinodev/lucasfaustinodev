@@ -61,15 +61,15 @@ export function Pricing() {
                   </p>
                 </div>
 
-                <div className="md:pl-2">
-                  <span className="text-xs font-medium text-gold-foil uppercase tracking-widest mb-5 block text-center md:text-left">
+                <div className="md:pl-2 md:flex md:flex-col md:items-center">
+                  <span className="text-xs font-medium text-gold-foil uppercase tracking-widest mb-5 block text-center">
                     Inclui
                   </span>
-                  <ul className="grid gap-3 sm:grid-cols-2">
+                  <ul className="grid gap-3 sm:grid-cols-2 md:max-w-md md:w-full">
                     {features.map((feature, i) => (
                       <li
                         key={feature}
-                        className="flex items-center gap-3 rounded-xl border border-white/[0.06] bg-white/[0.025] px-3.5 py-3"
+                        className="flex items-center gap-3"
                         style={{
                           opacity: inView ? 1 : 0.55,
                           transform: inView ? 'translateX(0)' : 'translateX(-8px)',
