@@ -41,7 +41,7 @@ export function Pricing() {
 
           <div className="gold-border-glow relative rounded-2xl bg-card shadow-card-hover">
             <div className="relative z-10 p-6 md:p-9">
-              <div className="grid gap-8 md:grid-cols-[0.92fr_1.08fr] md:items-start md:gap-10">
+              <div className="grid gap-8 md:grid-cols-[0.88fr_1.12fr] md:items-start md:gap-10">
                 <div className="md:pr-8 md:border-r md:border-[rgba(245,242,235,0.08)]">
                   <span className="text-xs font-medium text-gold-foil uppercase tracking-widest mb-4 block">
                     Investimento inicial
@@ -61,15 +61,15 @@ export function Pricing() {
                   </p>
                 </div>
 
-                <div>
-                  <span className="text-xs font-medium text-gold-foil uppercase tracking-widest mb-5 block">
+                <div className="md:pl-2">
+                  <span className="text-xs font-medium text-gold-foil uppercase tracking-widest mb-5 block text-center md:text-left">
                     Inclui
                   </span>
-                  <ul className="grid gap-3 sm:grid-cols-2 md:grid-cols-1">
+                  <ul className="grid gap-3 sm:grid-cols-2">
                     {features.map((feature, i) => (
                       <li
                         key={feature}
-                        className="flex items-center gap-3"
+                        className="flex items-center gap-3 rounded-xl border border-white/[0.06] bg-white/[0.025] px-3.5 py-3"
                         style={{
                           opacity: inView ? 1 : 0.55,
                           transform: inView ? 'translateX(0)' : 'translateX(-8px)',

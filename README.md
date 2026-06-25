@@ -44,6 +44,10 @@ Pagina de portfolio/prospeccao com navegacao, secoes comerciais, links para proj
 - Copy deve ser direta, humana e comercial, sem linguagem generica ou corporativa demais.
 - Screenshots reais dos projetos devem funcionar como prova visual.
 - Deploy, commit e push dependem de aprovacao explicita.
+- A versao atual foi publicada em producao a partir da branch `main`, no commit `fd97433`.
+- O projeto foi padronizado com `npm`, mantendo `package-lock.json` e removendo `pnpm-lock.yaml`.
+- Na Vercel, o framework foi ajustado para Next.js e o Output Directory ficou no padrao automatico do Next.js.
+- `.gitignore` foi criado para evitar `node_modules`, `.next`, logs e arquivos temporarios no repositorio.
 
 ## Pontos fortes para reaproveitar
 
@@ -60,8 +64,19 @@ Pagina de portfolio/prospeccao com navegacao, secoes comerciais, links para proj
 
 ## Status
 
-Em andamento como referencia personalizada.
+Publicada em producao como referencia personalizada.
+
+Proximos ajustes futuros:
+
+- Revisar a copy da home para deixar algumas frases mais naturais e menos genericas.
+- Revisar separadamente as 2 moderate vulnerabilities apontadas pelo `npm audit`.
 
 ## Links
 
 Pasta local: `C:\Users\Lucas\OneDrive\Área de Trabalho\Lucas\Landing Pages\GitHub Lucas Faustino Dev`
+
+Producao: `https://lucasfaustinodev.vercel.app`
+
+Demo Salao: `https://lucasfaustinodev.vercel.app/demo-salao/index.html`
+
+Demo Restaurante: `https://lucasfaustinodev.vercel.app/demo-restaurante/index.html`
