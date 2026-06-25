@@ -65,7 +65,7 @@ export function Pricing() {
                   <span className="text-xs font-medium text-gold-foil uppercase tracking-widest mb-5 block text-center">
                     Inclui
                   </span>
-                  <ul className="grid gap-3 sm:grid-cols-2 md:max-w-md md:w-full">
+                  <ul className="grid gap-3 sm:grid-cols-2 md:mt-10 md:max-w-md md:w-full">
                     {features.map((feature, i) => (
                       <li
                         key={feature}
