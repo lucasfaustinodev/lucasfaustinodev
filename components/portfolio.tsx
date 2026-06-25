@@ -14,16 +14,30 @@ interface Project {
   external?: boolean
 }
 
-function ProjectScreenshotPreview({ src, alt }: { src: string; alt: string }) {
+function ProjectScreenshotPreview({
+  src,
+  alt,
+  ambient = true,
+}: {
+  src: string
+  alt: string
+  ambient?: boolean
+}) {
   return (
     <div className="relative h-full w-full overflow-hidden bg-[#0b0d12] select-none">
-      <img
-        aria-hidden="true"
-        src={src}
-        alt=""
-        className="absolute inset-0 h-full w-full scale-110 object-cover opacity-25 blur-xl"
-      />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(200,169,107,0.08)_0%,rgba(15,17,21,0.1)_42%,rgba(15,17,21,0.72)_100%)]" />
+      {ambient ? (
+        <>
+          <img
+            aria-hidden="true"
+            src={src}
+            alt=""
+            className="absolute inset-0 h-full w-full scale-110 object-cover opacity-25 blur-xl"
+          />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(200,169,107,0.08)_0%,rgba(15,17,21,0.1)_42%,rgba(15,17,21,0.72)_100%)]" />
+        </>
+      ) : (
+        <div className="absolute inset-0 bg-[#f7efe9]" />
+      )}
       <img
         src={src}
         alt={alt}
@@ -245,6 +259,7 @@ const projects: Project[] = [
       <ProjectScreenshotPreview
         src="/portfolio/demo-salao-hero-desktop.png"
         alt="Hero desktop da landing de salão de beleza"
+        ambient={false}
       />
     ),
     category: 'Landing page',
