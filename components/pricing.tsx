@@ -41,7 +41,7 @@ export function Pricing() {
 
           <div className="gold-border-glow relative rounded-2xl bg-card shadow-card-hover">
             <div className="relative z-10 p-6 md:p-9">
-              <div className="grid gap-8 md:grid-cols-[0.88fr_1.12fr] md:items-start md:gap-10">
+              <div className="grid gap-8 md:grid-cols-[0.88fr_1.12fr] md:items-center md:gap-10">
                 <div className="md:pr-8 md:border-r md:border-[rgba(245,242,235,0.08)]">
                   <span className="text-xs font-medium text-gold-foil uppercase tracking-widest mb-4 block">
                     Investimento inicial
@@ -61,7 +61,7 @@ export function Pricing() {
                   </p>
                 </div>
 
-                <div className="md:pl-2 md:flex md:flex-col md:items-center">
+                <div className="md:pl-2 md:flex md:flex-col md:items-center md:self-center">
                   <span className="text-xs font-medium text-gold-foil uppercase tracking-widest mb-5 block text-center">
                     Inclui
                   </span>
