@@ -16,13 +16,20 @@ interface Project {
 
 function ProjectScreenshotPreview({ src, alt }: { src: string; alt: string }) {
   return (
-    <div className="relative h-full w-full overflow-hidden bg-[#0f1115] select-none">
+    <div className="relative h-full w-full overflow-hidden bg-[#0b0d12] select-none">
+      <img
+        aria-hidden="true"
+        src={src}
+        alt=""
+        className="absolute inset-0 h-full w-full scale-110 object-cover opacity-25 blur-xl"
+      />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(200,169,107,0.08)_0%,rgba(15,17,21,0.1)_42%,rgba(15,17,21,0.72)_100%)]" />
       <img
         src={src}
         alt={alt}
-        className="absolute inset-0 h-full w-full object-cover"
+        className="absolute inset-3 h-[calc(100%-1.5rem)] w-[calc(100%-1.5rem)] rounded-lg object-contain shadow-[0_18px_42px_rgba(0,0,0,0.28)]"
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-[#0f1115]/20 via-transparent to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-[#0f1115]/24 via-transparent to-transparent" />
     </div>
   )
 }
