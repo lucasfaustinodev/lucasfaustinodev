@@ -257,7 +257,7 @@ const projects: Project[] = [
   {
     preview: (
       <ProjectScreenshotPreview
-        src="/portfolio/demo-salao-real.png"
+        src="/portfolio/demo-salao-card-wide.png"
         alt="Hero desktop da landing de salão de beleza"
         ambient={false}
       />
