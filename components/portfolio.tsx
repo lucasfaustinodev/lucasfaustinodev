@@ -273,7 +273,7 @@ const projects: Project[] = [
   {
     preview: (
       <ProjectScreenshotPreview
-        src="/portfolio/demo-restaurante-real.png"
+        src="/portfolio/demo-restaurante-card-wide.png"
         alt="Hero desktop do cardápio online Mordida Quente"
       />
     ),
