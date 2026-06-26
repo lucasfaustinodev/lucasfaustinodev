@@ -288,7 +288,7 @@ const projects: Project[] = [
   {
     preview: (
       <ProjectScreenshotPreview
-        src="/portfolio/finia-real.png"
+        src="/portfolio/finia-card-wide.png"
         alt="Tela de entrada do Finia App"
       />
     ),
