@@ -419,6 +419,7 @@ button {
 .hero-media {
   position: relative;
   min-width: 0;
+  animation: floatHeroImage 5.2s ease-in-out infinite;
 }
 
 .hero-image {
@@ -427,7 +428,6 @@ button {
   aspect-ratio: 4 / 5;
   border-radius: 28px;
   box-shadow: 0 30px 65px rgba(7, 3, 2, 0.36);
-  animation: floatHeroImage 5.2s ease-in-out infinite;
 }
 
 .hero-image::after {
@@ -461,7 +461,6 @@ button {
   color: var(--cream);
   box-shadow: 0 22px 42px rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(12px);
-  animation: floatBadge 4.5s ease-in-out infinite;
 }
 
 .hero-price span {
