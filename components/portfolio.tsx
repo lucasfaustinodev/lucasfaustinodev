@@ -336,12 +336,12 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           {project.preview}
         </div>
 
-        <div className="absolute inset-0 bg-gradient-to-t from-[rgba(15,17,21,0.92)] via-[rgba(15,17,21,0.25)] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400 flex items-end justify-end p-4 pointer-events-none group-hover:pointer-events-auto">
+        <div className="absolute inset-0 bg-gradient-to-t from-[rgba(15,17,21,0.92)] via-[rgba(15,17,21,0.25)] to-transparent opacity-100 pointer-events-auto transition-opacity duration-400 flex items-end justify-end p-4 md:opacity-0 md:pointer-events-none md:group-hover:opacity-100 md:group-hover:pointer-events-auto md:focus-within:opacity-100 md:focus-within:pointer-events-auto">
           <a
             href={project.href}
             target={project.external ? '_blank' : undefined}
             rel={project.external ? 'noopener noreferrer' : undefined}
-            className="btn-gold flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg translate-y-2 group-hover:translate-y-0"
+            className="btn-gold flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-[#0f1115] md:translate-y-2 md:group-hover:translate-y-0 md:focus-visible:translate-y-0"
             style={{ transition: 'transform 0.35s ease 0.05s' }}
           >
             <span className="relative z-10 flex items-center gap-1.5">
@@ -374,15 +374,6 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
             </span>
           ))}
         </div>
-        <a
-          href={project.href}
-          target={project.external ? '_blank' : undefined}
-          rel={project.external ? 'noopener noreferrer' : undefined}
-          className="mt-5 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-gold transition-colors duration-300 hover:text-gold-bright"
-        >
-          Ver projeto
-          <ArrowUpRight size={15} aria-hidden="true" />
-        </a>
       </div>
     </article>
   )
