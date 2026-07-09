@@ -20,6 +20,7 @@ function ProjectScreenshotPreview({
   alt,
   width,
   height,
+  loading = 'lazy',
   ambient = true,
 }: {
   src: string
@@ -27,6 +28,7 @@ function ProjectScreenshotPreview({
   alt: string
   width: number
   height: number
+  loading?: 'eager' | 'lazy'
   ambient?: boolean
 }) {
   return (
@@ -41,7 +43,7 @@ function ProjectScreenshotPreview({
               alt=""
               width={width}
               height={height}
-              loading="lazy"
+              loading={loading}
               decoding="async"
               className="absolute inset-0 h-full w-full scale-110 object-cover opacity-25 blur-xl"
             />
@@ -58,7 +60,7 @@ function ProjectScreenshotPreview({
           alt={alt}
           width={width}
           height={height}
-          loading="lazy"
+          loading={loading}
           decoding="async"
           className="absolute inset-3 h-[calc(100%-1.5rem)] w-[calc(100%-1.5rem)] rounded-lg object-contain shadow-[0_18px_42px_rgba(0,0,0,0.28)]"
         />
@@ -282,6 +284,7 @@ const projects: Project[] = [
         alt="Hero desktop da landing de salão de beleza"
         width={1560}
         height={601}
+        loading="eager"
         ambient={false}
       />
     ),
@@ -301,6 +304,7 @@ const projects: Project[] = [
         alt="Hero desktop do cardápio online Mordida Quente"
         width={1626}
         height={727}
+        loading="eager"
       />
     ),
     category: 'Cardápio online',
@@ -349,13 +353,11 @@ const projects: Project[] = [
   },
 ]
 
-function ProjectCard({ project, index }: { project: Project; index: number }) {
-  const { ref, inView } = useInView(0.01, '0px 0px 280px 0px')
+function ProjectCard({ project, index, inView }: { project: Project; index: number; inView: boolean }) {
   const featured = index < 2
 
   return (
     <article
-      ref={ref}
       className="group relative bg-card rounded-2xl overflow-hidden border border-[rgba(245,242,235,0.06)] hover:border-[rgba(200,169,107,0.35)] transition-all duration-500 hover:shadow-card-hover hover:-translate-y-1.5"
       style={{
         opacity: inView ? 1 : 0,
@@ -412,17 +414,16 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
 }
 
 export function Portfolio() {
-  const { ref: headRef, inView: headIn } = useInView(0.01, '0px 0px 280px 0px')
+  const { ref: sectionRef, inView } = useInView<HTMLElement>(0, '0px 0px 520px 0px')
 
   return (
-    <section id="portfolio" className="pt-28 pb-24 px-6">
+    <section ref={sectionRef} id="portfolio" className="pt-28 pb-24 px-6">
       <div className="max-w-6xl mx-auto">
         <div
-          ref={headRef}
           className="mb-16 max-w-3xl"
           style={{
-            opacity: headIn ? 1 : 0,
-            transform: headIn ? 'translateY(0)' : 'translateY(20px)',
+            opacity: inView ? 1 : 0,
+            transform: inView ? 'translateY(0)' : 'translateY(20px)',
             transition: 'opacity 0.6s ease, transform 0.6s ease',
           }}
         >
@@ -443,7 +444,7 @@ export function Portfolio() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-7">
           {projects.map((project, i) => (
-            <ProjectCard key={project.title} project={project} index={i} />
+            <ProjectCard key={project.title} project={project} index={i} inView={inView} />
           ))}
         </div>
       </div>
