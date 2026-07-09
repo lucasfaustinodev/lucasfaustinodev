@@ -16,33 +16,53 @@ interface Project {
 
 function ProjectScreenshotPreview({
   src,
+  webpSrc,
   alt,
+  width,
+  height,
   ambient = true,
 }: {
   src: string
+  webpSrc: string
   alt: string
+  width: number
+  height: number
   ambient?: boolean
 }) {
   return (
     <div className="relative h-full w-full overflow-hidden bg-[#0b0d12] select-none">
       {ambient ? (
         <>
-          <img
-            aria-hidden="true"
-            src={src}
-            alt=""
-            className="absolute inset-0 h-full w-full scale-110 object-cover opacity-25 blur-xl"
-          />
+          <picture>
+            <source srcSet={webpSrc} type="image/webp" />
+            <img
+              aria-hidden="true"
+              src={src}
+              alt=""
+              width={width}
+              height={height}
+              loading="lazy"
+              decoding="async"
+              className="absolute inset-0 h-full w-full scale-110 object-cover opacity-25 blur-xl"
+            />
+          </picture>
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(200,169,107,0.08)_0%,rgba(15,17,21,0.1)_42%,rgba(15,17,21,0.72)_100%)]" />
         </>
       ) : (
         <div className="absolute inset-0 bg-[#f7efe9]" />
       )}
-      <img
-        src={src}
-        alt={alt}
-        className="absolute inset-3 h-[calc(100%-1.5rem)] w-[calc(100%-1.5rem)] rounded-lg object-contain shadow-[0_18px_42px_rgba(0,0,0,0.28)]"
-      />
+      <picture>
+        <source srcSet={webpSrc} type="image/webp" />
+        <img
+          src={src}
+          alt={alt}
+          width={width}
+          height={height}
+          loading="lazy"
+          decoding="async"
+          className="absolute inset-3 h-[calc(100%-1.5rem)] w-[calc(100%-1.5rem)] rounded-lg object-contain shadow-[0_18px_42px_rgba(0,0,0,0.28)]"
+        />
+      </picture>
       <div className="absolute inset-0 bg-gradient-to-t from-[#0f1115]/24 via-transparent to-transparent" />
     </div>
   )
@@ -258,7 +278,10 @@ const projects: Project[] = [
     preview: (
       <ProjectScreenshotPreview
         src="/portfolio/demo-salao-card-wide.png"
+        webpSrc="/portfolio/demo-salao-card-wide.webp"
         alt="Hero desktop da landing de salão de beleza"
+        width={1560}
+        height={601}
         ambient={false}
       />
     ),
@@ -274,7 +297,10 @@ const projects: Project[] = [
     preview: (
       <ProjectScreenshotPreview
         src="/portfolio/demo-restaurante-card-wide.png"
+        webpSrc="/portfolio/demo-restaurante-card-wide.webp"
         alt="Hero desktop do cardápio online Mordida Quente"
+        width={1626}
+        height={727}
       />
     ),
     category: 'Cardápio online',
@@ -289,7 +315,10 @@ const projects: Project[] = [
     preview: (
       <ProjectScreenshotPreview
         src="/portfolio/finia-card-wide.png"
+        webpSrc="/portfolio/finia-card-wide.webp"
         alt="Tela de entrada do Finia App"
+        width={1724}
+        height={937}
       />
     ),
     category: 'Projeto autoral',
@@ -304,7 +333,10 @@ const projects: Project[] = [
     preview: (
       <ProjectScreenshotPreview
         src="/portfolio/lucas-portfolio-real.png"
+        webpSrc="/portfolio/lucas-portfolio-real.webp"
         alt="Hero desktop da página profissional Lucas Faustino Dev"
+        width={1365}
+        height={620}
       />
     ),
     category: 'Projeto autoral',
