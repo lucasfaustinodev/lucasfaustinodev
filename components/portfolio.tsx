@@ -350,7 +350,7 @@ const projects: Project[] = [
 ]
 
 function ProjectCard({ project, index }: { project: Project; index: number }) {
-  const { ref, inView } = useInView(0.01, '0px 0px 20% 0px')
+  const { ref, inView } = useInView(0.01, '0px 0px 280px 0px')
   const featured = index < 2
 
   return (
@@ -412,7 +412,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
 }
 
 export function Portfolio() {
-  const { ref: headRef, inView: headIn } = useInView(0.01, '0px 0px 20% 0px')
+  const { ref: headRef, inView: headIn } = useInView(0.01, '0px 0px 280px 0px')
 
   return (
     <section id="portfolio" className="pt-28 pb-24 px-6">
